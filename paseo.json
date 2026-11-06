@@ -1,0 +1,23 @@
+{
+  "worktree": {
+    "setup": [
+      "npm ci"
+    ]
+  },
+  "scripts": {
+    "dev": {
+      "command": "exec ./node_modules/.bin/astro dev --port \"$PASEO_PORT\"",
+      "type": "service"
+    },
+    "build": {
+      "command": "npm run build"
+    },
+    "preview": {
+      "command": "npm run build && exec ./node_modules/.bin/wrangler dev --config wrangler.jsonc --port \"$PASEO_PORT\"",
+      "type": "service"
+    },
+    "typecheck": {
+      "command": "./node_modules/.bin/wrangler types && exec ./node_modules/.bin/astro check"
+    }
+  }
+}

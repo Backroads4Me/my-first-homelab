@@ -1,0 +1,7 @@
+title: Quality Reviewer
+readonly: true
+agent:
+  provider: omp
+  model: google-antigravity/gemini-3.8-flash
+  thinking: medium
+  mode: full

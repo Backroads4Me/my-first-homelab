@@ -103,4 +103,9 @@ export default defineConfig({
       },
     }),
   ],
+
+  // Fail instead of moving to the next port, so a Paseo proxy never points at a stale port.
+  vite: {
+    server: { strictPort: true },
+  },
 });

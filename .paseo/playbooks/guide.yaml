@@ -1,0 +1,195 @@
+title: Build or Expand a Guide
+description: Research, outline, draft, build-test, review, and locally commit a new guide or documentation page.
+
+# Runs edit the checkout they start in; one active run per project keeps two writers apart.
+concurrency: 1
+
+inputs:
+  topic:
+    type: string
+    required: true
+    description: Topic or guide title to research and write (e.g. Setting up Home Assistant in LXC, Tailscale Remote Access, Proxmox Storage & ZFS)
+  audience_level:
+    type: enum
+    values: [beginner, intermediate]
+    default: beginner
+    description: Target audience experience level
+  context:
+    type: string
+    default: ""
+    description: Additional context, hardware constraints, or user notes
+
+outputs:
+  target_file:
+    type: string
+    value: "{{ steps.outline.outputs.target_file }}"
+  summary:
+    type: string
+    value: "{{ steps.draft.outputs.summary }}"
+  commit:
+    type: string
+    value: "{{ steps.commit.outputs.commit }}"
+
+steps:
+  - id: research
+    role: researcher
+    inputs: [topic, audience_level, context]
+    outcomes: [success, needs_input]
+    on:
+      needs_input:
+        ask: "The researcher needs clarification on topic scope or hardware constraints."
+        max_loops: 3
+    outputs:
+      research_notes:
+        type: string
+        description: Findings, official docs references, verified CLI commands, and beginner gotchas
+    prompt: |
+      Research topic: {{ inputs.topic }}
+      Target audience: {{ inputs.audience_level }}
+      Additional context: {{ inputs.context }}
+
+      Investigate the latest official documentation, verified CLI commands, hardware requirements, and common failure modes.
+      Provide a comprehensive research briefing in research_notes.
+
+  - id: outline
+    role: architect
+    needs: [research]
+    inputs: [topic, audience_level, context, research_notes]
+    outcomes: [success, needs_input]
+    on:
+      needs_input:
+        ask: "The architect needs input on the proposed structure or approach."
+        max_loops: 3
+    outputs:
+      target_file:
+        type: string
+        description: Relative path in src/content/docs/ where the guide should live
+      outline:
+        type: string
+        description: Structured section-by-section outline, prerequisites, and command sequence
+    prompt: |
+      Topic: {{ inputs.topic }}
+      Audience: {{ inputs.audience_level }}
+      Context: {{ inputs.context }}
+
+      Research Notes:
+      {{ inputs.research_notes }}
+
+      Design the guide structure, select the exact file path under src/content/docs/, and construct the pedagogical outline.
+
+  - id: gate_outline
+    needs: [outline]
+    gate: "Approve outline and target path for {{ inputs.topic }}?"
+    choices:
+      approved:
+        label: "Approve Outline"
+        color: primary
+      revise:
+        label: "Revise Outline"
+        color: neutral
+        comment: required
+      cancel:
+        label: "Cancel Run"
+        color: danger
+    on:
+      revise:
+        goto: outline
+        max_loops: 3
+      cancel: end
+
+  - id: draft
+    role: writer
+    needs: [gate_outline]
+    inputs: [topic, audience_level, context, target_file, outline, research_notes]
+    outputs:
+      file_path:
+        type: string
+        description: Path to the written file
+      changed_files:
+        type: string
+        description: Every repo-relative path the draft created, changed or deleted, one per line
+      summary:
+        type: string
+        description: Summary of changes and components used
+    retries: 1
+    timeout: 1h
+    prompt: |
+      Topic: {{ inputs.topic }}
+      Audience: {{ inputs.audience_level }}
+      Context: {{ inputs.context }}
+      Target File: {{ inputs.target_file }}
+
+      Outline:
+      {{ inputs.outline }}
+
+      Research Notes:
+      {{ inputs.research_notes }}
+
+      Implement the guide at {{ inputs.target_file }}. Follow Starlight styling, include verified commands, and write for the stated audience.
+
+  - id: verify_build
+    needs: [draft]
+    script: verify-build.sh
+    inputs: [target_file, changed_files]
+    outcomes: [success, failure, env_error]
+    timeout: 5m
+    on:
+      failure:
+        goto: draft
+        max_loops: 2
+      env_error: fail
+
+  - id: review
+    role: reviewer
+    needs: [verify_build]
+    inputs: [topic, audience_level, target_file, outline, file_path, changed_files]
+    outcomes: [approved, changes_requested]
+    outputs:
+      review_notes:
+        type: string
+        description: Review feedback on clarity, audience fit, and frontmatter
+    on:
+      changes_requested:
+        goto: draft
+        max_loops: 2
+    prompt: |
+      Topic: {{ inputs.topic }}
+      Audience: {{ inputs.audience_level }}
+      Target File: {{ inputs.target_file }}
+      Changed Files:
+      {{ inputs.changed_files }}
+
+      Outline:
+      {{ inputs.outline }}
+
+      Review the written file ({{ inputs.file_path }}) and every changed file against the outline and the quality standards for this audience.
+
+  - id: gate_publish
+    needs: [review]
+    gate: "Commit the changes for {{ inputs.topic }} locally (build passed and reviewed)?"
+    choices:
+      approved:
+        label: "Approve and Commit (local, no push)"
+        color: success
+      revise:
+        label: "Request Changes"
+        color: neutral
+        comment: required
+      discard:
+        label: "End Run (keep edits uncommitted)"
+        color: danger
+    on:
+      revise:
+        goto: draft
+        max_loops: 2
+      discard: end
+
+  - id: commit
+    needs: [gate_publish]
+    script: commit-guide.sh
+    inputs: [topic, changed_files]
+    outputs:
+      commit:
+        type: string
+        description: Commit hash holding the approved files
+    timeout: 2m

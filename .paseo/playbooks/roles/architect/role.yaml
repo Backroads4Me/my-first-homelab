@@ -1,0 +1,7 @@
+title: System Architect
+readonly: true
+agent:
+  provider: omp
+  model: vllm/qwen3.8-flash-next
+  thinking: xhigh
+  mode: full

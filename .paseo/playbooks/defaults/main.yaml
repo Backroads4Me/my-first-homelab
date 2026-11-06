@@ -1,0 +1,11 @@
+agent:
+  provider: omp
+  model: vllm/qwen3.8-flash-next
+  mode: full
+manager:
+  provider: omp
+  model: vllm/qwen3.8-flash-next
+  # omp modes are full, write and ask; only full runs the manager's MCP calls unattended.
+  mode: full
+timeout: 1h
+silence: 30m
