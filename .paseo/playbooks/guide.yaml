@@ -9,11 +9,6 @@ inputs:
     type: string
     required: true
     description: "Page to write or revise, inside the scope in CONTRIBUTING.md (e.g. Revise Install Docker for Debian 13, Tighten Break It on Purpose)"
-  audience_level:
-    type: enum
-    values: [beginner, intermediate]
-    default: beginner
-    description: Target audience experience level
   context:
     type: string
     default: ""
@@ -33,7 +28,7 @@ outputs:
 steps:
   - id: research
     role: researcher
-    inputs: [topic, audience_level, context]
+    inputs: [topic, context]
     outcomes: [success, needs_input]
     on:
       needs_input:
@@ -45,7 +40,6 @@ steps:
         description: Findings, official docs references, verified CLI commands, and beginner gotchas
     prompt: |
       Research topic: {{ inputs.topic }}
-      Target audience: {{ inputs.audience_level }}
       Additional context: {{ inputs.context }}
 
       Investigate the latest official documentation, verified CLI commands, hardware requirements, and common failure modes.
@@ -54,7 +48,7 @@ steps:
   - id: outline
     role: architect
     needs: [research]
-    inputs: [topic, audience_level, context, research_notes]
+    inputs: [topic, context, research_notes]
     outcomes: [success, needs_input]
     on:
       needs_input:
@@ -69,7 +63,6 @@ steps:
         description: Structured section-by-section outline, prerequisites, and command sequence
     prompt: |
       Topic: {{ inputs.topic }}
-      Audience: {{ inputs.audience_level }}
       Context: {{ inputs.context }}
 
       Research Notes:
@@ -100,7 +93,7 @@ steps:
   - id: draft
     role: writer
     needs: [gate_outline]
-    inputs: [topic, audience_level, context, target_file, outline, research_notes]
+    inputs: [topic, context, target_file, outline, research_notes]
     outputs:
       file_path:
         type: string
@@ -115,7 +108,6 @@ steps:
     timeout: 1h
     prompt: |
       Topic: {{ inputs.topic }}
-      Audience: {{ inputs.audience_level }}
       Context: {{ inputs.context }}
       Target File: {{ inputs.target_file }}
 
@@ -142,19 +134,18 @@ steps:
   - id: review
     role: reviewer
     needs: [verify_build]
-    inputs: [topic, audience_level, target_file, outline, file_path, changed_files]
+    inputs: [topic, target_file, outline, file_path, changed_files]
     outcomes: [approved, changes_requested]
     outputs:
       review_notes:
         type: string
-        description: Review feedback on clarity, audience fit, and frontmatter
+        description: Review feedback against CONTRIBUTING.md, the outline, and frontmatter
     on:
       changes_requested:
         goto: draft
         max_loops: 2
     prompt: |
       Topic: {{ inputs.topic }}
-      Audience: {{ inputs.audience_level }}
       Target File: {{ inputs.target_file }}
       Changed Files:
       {{ inputs.changed_files }}
@@ -162,7 +153,7 @@ steps:
       Outline:
       {{ inputs.outline }}
 
-      Review the written file ({{ inputs.file_path }}) and every changed file against the outline and the quality standards for this audience.
+      Review the written file ({{ inputs.file_path }}) and every changed file against the outline and CONTRIBUTING.md.
 
   - id: gate_publish
     needs: [review]
