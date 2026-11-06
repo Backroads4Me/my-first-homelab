@@ -18,7 +18,7 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 - Use `https`, not `http`: `https://PROXMOX-IP:8006`.
 - Confirm the IP shown on the physical server's console.
 - Make sure the server and your everyday computer are on the same home network.
-- Try `ping PROXMOX-IP` in your everyday computer's terminal (PowerShell on Windows, Terminal on macOS or Linux), not the VS Code terminal. If it fails, check the Ethernet cable and the gateway entered during installation.
+- Try `ping PROXMOX-IP` in a terminal on your everyday computer (PowerShell on Windows, Terminal on macOS or Linux; or in VS Code when not connected to a remote). If it fails, check the Ethernet cable and the gateway entered during installation.
 
 The browser certificate warning is expected for a new Proxmox server. Accept it only when the address is your server's address.
 
@@ -29,17 +29,17 @@ The browser certificate warning is expected for a new Proxmox server. Accept it 
 - Open the container's **Console** in Proxmox and run `ip address` to check its current address.
 - Retry `ssh root@PROXMOX-IP` or `ssh root@CONTAINER-IP`, whichever system you are connecting to.
 
-If SSH rejects the key, use the Proxmox console to compare `/root/.ssh/authorized_keys` with the output of `ssh-keygen -y -f ~/.ssh/id_ed25519` on your everyday computer.
+If SSH rejects the key, use the Proxmox console to compare `/root/.ssh/authorized_keys` with the output of `cat $HOME/.ssh/id_ed25519.pub` on your everyday computer.
 
 ## SSH says "REMOTE HOST IDENTIFICATION HAS CHANGED"
 
-This appears after you recreate a container, or when an address moves to a different one. Your everyday computer still holds the old host key. In that computer's terminal, remove it and reconnect:
+This appears after you recreate a container, or when an address moves to a different one. Your everyday computer still holds the old host key. In a terminal on that computer (such as a VS Code window not connected to a remote), remove the old key, replacing `CONTAINER-IP` with your container's IP address:
 
 ```bash
 ssh-keygen -R CONTAINER-IP
 ```
 
-Use `PROXMOX-IP` instead if you connect to the Proxmox host. SSH will ask you to accept the new key.
+Use your server's `PROXMOX-IP` instead if you are connecting to the Proxmox host. Reconnect, and SSH will ask you to accept the new host key.
 
 ## Docker will not start in the LXC
 

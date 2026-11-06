@@ -24,7 +24,7 @@ ends with something working:
 3. Create Your Container
 4. Install Docker
 5. Install Dockhand
-6. Your Dashboard
+6. Build Your Dashboard
 7. Break It on Purpose
 8. Add Monitoring
 

@@ -42,6 +42,6 @@ at `http://CONTAINER-IP:3000`.
 
 ## Save the working dashboard
 
-In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snapshot**, and name it `working-dashboard`.
+In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snapshot**, enter `working-dashboard` in the **Name** field, and choose **Take Snapshot**.
 
 Your homelab now has a front door and a restore point.
