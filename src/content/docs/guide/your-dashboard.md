@@ -10,7 +10,7 @@ Heimdall gives your homelab a simple home page with links to every service.
 ## Deploy Heimdall
 
 1. Open Dockhand at `http://CONTAINER-IP:3000`.
-2. Open **Stacks**, choose **New Stack**, select an internal stack, and name it `heimdall`.
+2. Open **Stacks**, choose **Create**, and enter `heimdall` for the stack name.
 3. Paste this Compose file into the editor:
 
 ```yaml
@@ -30,15 +30,15 @@ services:
       - "8080:80"
 ```
 
-4. Choose **Deploy** and wait for the container to show as running.
+4. Choose **Create & Start** and wait for the container status to show as running.
 5. Open `http://CONTAINER-IP:8080`.
 
 ## Add your first links
 
-In Heimdall, choose **Add an application** and add:
-
-- **Proxmox:** `https://PROXMOX-IP:8006`
-- **Dockhand:** `http://CONTAINER-IP:3000`
+In Heimdall, choose **Add an application here** (or the **+** tile). Enter
+`Proxmox` in **Application name**, enter `https://PROXMOX-IP:8006` in **URL**,
+and choose **Save** (the disk icon in the top right). Repeat to add `Dockhand`
+at `http://CONTAINER-IP:3000`.
 
 ## Save the working dashboard
 

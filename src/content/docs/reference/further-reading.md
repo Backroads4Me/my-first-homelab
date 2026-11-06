@@ -28,7 +28,7 @@ Community posts can become outdated. Check dates, read follow-up comments, and c
 
 ## Learning Resources
 
-- [Linux Journey](https://linuxjourney.com/): short lessons on the command line, permissions, processes, networking, and other Linux fundamentals.
+- [Linux Journey](https://labex.io/linuxjourney): short lessons on the command line, permissions, processes, networking, and other Linux fundamentals.
 - [Docker Get Started](https://docs.docker.com/get-started/): guided exercises that introduce images, containers, and multi-container applications.
 - [Proxmox VE video tutorials](https://www.proxmox.com/en/services/training-courses/videos/proxmox-virtual-environment): official demonstrations of Proxmox features and workflows.
 - [Awesome Selfhosted](https://awesome-selfhosted.net/): a categorized catalog for discovering software; evaluate maintenance, documentation, and backup requirements before deploying anything.

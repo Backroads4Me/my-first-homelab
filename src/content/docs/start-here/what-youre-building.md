@@ -14,12 +14,27 @@ outgrow parts of it later. Good. That means it did its job.
 
 Proxmox recommends running application containers such as Docker inside a virtual machine. This guide deliberately uses an unprivileged LXC with nesting enabled because snapshots and clones make experimentation less scary, and its tiny overhead suits modest hardware.
 
+## The path
+
+Eight short tasks take you from a blank machine to a working lab. Each one
+ends with something working:
+
+1. Install Proxmox
+2. Set Up VS Code
+3. Create Your Container
+4. Install Docker
+5. Install Dockhand
+6. Your Dashboard
+7. Break It on Purpose
+8. Add Monitoring
+
 ## What you need
 
 - An old desktop or laptop with a 64-bit processor and a wired network connection
+- An old laptop works if you leave the lid open so the server stays awake
 - 16 GB of RAM for a comfortable start; do not use a machine with less than 8 GB
 - A 64 GB drive or larger that can be erased
-- A USB stick that can be erased
+- A USB stick of 2 GB or larger that can be erased
 - Your everyday Windows, macOS, or Linux computer
 - A weekend of curiosity
 

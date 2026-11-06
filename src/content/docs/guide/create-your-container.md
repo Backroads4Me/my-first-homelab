@@ -14,15 +14,16 @@ This task creates the small Debian server that will hold every Docker app in the
 
 ## Create the container
 
-In the VS Code terminal on your everyday computer, print your public key:
+In a VS Code window that is not connected to a remote (the lower-left corner
+shows no host), print your public key:
 
 ```bash
-ssh-keygen -y -f ~/.ssh/id_ed25519
+cat $HOME/.ssh/id_ed25519.pub
 ```
 
 Copy the single output line. In Proxmox, choose **Create CT** and complete the wizard:
 
-1. **General:** use hostname `docker`, set a root password, paste the line into **SSH public key**, and leave **Unprivileged container** checked.
+1. **General:** use hostname `docker`, set a root password, paste the line into **SSH public key**, and leave **Unprivileged container** and **Nesting** checked. Docker needs nesting to run.
 2. **Template:** select the Debian 13 template.
 3. **Disks:** set **Disk size** to `16` GiB.
 4. **CPU:** set **Cores** to `2`.
@@ -31,11 +32,10 @@ Copy the single output line. In Proxmox, choose **Create CT** and complete the w
 7. **DNS:** keep **Use host settings**.
 8. Confirm the settings and create the container.
 
-Select the new container, open **Options → Features**, choose **Edit**, enable **Nesting**, and save. Docker will not start without nesting.
-
 Start the container. Its **Summary** page shows the DHCP address. Return to
 your router's admin page and create a DHCP reservation for the container named
-`docker`. This keeps its address from changing.
+`docker`. This keeps its address from changing. The container's MAC address is
+on its **Network** page in Proxmox if the reservation asks for one.
 
 ## Connect to Debian
 

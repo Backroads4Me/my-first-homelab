@@ -10,8 +10,9 @@ Docker logs.
 
 ## Add Beszel
 
-In Dockhand, create an internal stack named `beszel` with this Compose file.
-Replace `CONTAINER-IP` with the Debian container's address, then deploy it:
+In Dockhand, open **Stacks**, choose **Create**, and name the stack `beszel`.
+Replace `CONTAINER-IP` with the Debian container's address, paste the file into
+the editor, and choose **Create & Start**:
 
 ```yaml
 services:
@@ -42,15 +43,18 @@ services:
       KEY: "REPLACE_AFTER_ADDING_SYSTEM"
 ```
 
-Open `http://CONTAINER-IP:8090`, create the admin account, and choose **Add
-System**. Use `/beszel_socket/beszel.sock` for **Host / IP**. Copy the
-generated token and key into the matching values in Dockhand's stack editor,
-then choose **Save and deploy**. Finish adding the system in Beszel. It should
-turn green.
+Open `http://CONTAINER-IP:8090` and create your admin account. Choose **Add
+System**. Enter a **Name** such as `homelab` and enter
+`/beszel_socket/beszel.sock` for **Host / IP**. Copy the generated token and
+public key into the matching values in Dockhand's stack editor, then choose
+**Save & redeploy**. The `beszel-agent` container logs errors until these
+credentials are saved; that is normal. Return to Beszel and choose **Add
+System** in the dialog to finish. The system status should turn green.
 
 ## Add Dozzle
 
-Create an internal stack named `dozzle`, paste this file, and deploy it:
+On **Stacks**, choose **Create**, name the stack `dozzle`, paste this file into
+the editor, and choose **Create & Start**:
 
 ```yaml
 services:
@@ -69,5 +73,6 @@ Open `http://CONTAINER-IP:8888`. Add Beszel and Dozzle to Heimdall with their UR
 
 You now have Proxmox, a lightweight Debian container, Docker, a dashboard,
 health monitoring, and live logs. You have also proved you can undo a mistake.
-Take one final snapshot named `core-complete`, and make **snapshot before every
-experiment** your homelab habit.
+In Proxmox, select the Debian container, open **Snapshots**, choose **Take
+Snapshot**, enter `core-complete` in the **Name** field, and choose **Take
+Snapshot**. Make **snapshot before every experiment** your homelab habit.

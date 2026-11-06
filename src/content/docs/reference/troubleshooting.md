@@ -2,7 +2,7 @@
 title: Troubleshooting
 description: Fix the problems most likely to appear while following this guide.
 sidebar:
-  order: 1
+  order: 2
 ---
 
 Start with the symptom you can see. Change one thing, test again, and keep notes.
@@ -18,7 +18,7 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 - Use `https`, not `http`: `https://PROXMOX-IP:8006`.
 - Confirm the IP shown on the physical server's console.
 - Make sure the server and your everyday computer are on the same home network.
-- Try `ping PROXMOX-IP` in the VS Code terminal. If it fails, check the Ethernet cable and the gateway entered during installation.
+- Try `ping PROXMOX-IP` in your everyday computer's terminal (PowerShell on Windows, Terminal on macOS or Linux), not the VS Code terminal. If it fails, check the Ethernet cable and the gateway entered during installation.
 
 The browser certificate warning is expected for a new Proxmox server. Accept it only when the address is your server's address.
 
@@ -27,9 +27,19 @@ The browser certificate warning is expected for a new Proxmox server. Accept it 
 - Confirm the target IP. The Proxmox host and Debian container have different addresses.
 - Confirm the target is running in Proxmox.
 - Open the container's **Console** in Proxmox and run `ip address` to check its current address.
-- Retry `ssh root@CORRECT-IP`.
+- Retry `ssh root@PROXMOX-IP` or `ssh root@CONTAINER-IP`, whichever system you are connecting to.
 
 If SSH rejects the key, use the Proxmox console to compare `/root/.ssh/authorized_keys` with the output of `ssh-keygen -y -f ~/.ssh/id_ed25519` on your everyday computer.
+
+## SSH says "REMOTE HOST IDENTIFICATION HAS CHANGED"
+
+This appears after you recreate a container, or when an address moves to a different one. Your everyday computer still holds the old host key. In that computer's terminal, remove it and reconnect:
+
+```bash
+ssh-keygen -R CONTAINER-IP
+```
+
+Use `PROXMOX-IP` instead if you connect to the Proxmox host. SSH will ask you to accept the new key.
 
 ## Docker will not start in the LXC
 
@@ -49,11 +59,13 @@ the port. Find the container:
 docker ps --format 'table {{.Names}}\t{{.Ports}}'
 ```
 
-Open that container in Dockhand and remove its old stack. Redeploy the stack
+Open that container in Dockhand and remove its old stack. If Dockhand itself
+will not open, run `docker ps` in the container terminal to find the
+conflicting name, then `docker rm -f NAME`. Redeploy the stack
 from the current guide page without changing its port.
 
 ## I broke it
 
-Stop changing things. In Proxmox, select the Debian container, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded.
+Stop changing things. In Proxmox, select the Debian container, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded. Rollback leaves the container stopped, so start it again in Proxmox before reconnecting.
 
 If there is no snapshot, inspect the affected stack's logs in Dockhand or Dozzle before deleting anything.

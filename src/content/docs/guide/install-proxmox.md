@@ -33,19 +33,22 @@ Open the PC's BIOS or boot menu with `F2`, `F12`, or `Del`, enable USB boot, the
 ## Log in and update
 
 The physical server's console shows its management address after it starts.
-Open your router's admin page and create a DHCP reservation for the Proxmox
-server at that address. This keeps the router from assigning the address to
-another device.
+Proxmox keeps the address it was installed with. Open your router's admin
+page and create a DHCP reservation for that address so the router never
+hands it to another device. The router's client list shows the Proxmox
+device and its MAC address if the reservation asks for one.
 
 On your everyday computer, open `https://PROXMOX-IP:8006`, replacing
 `PROXMOX-IP` with the reserved address. Accept the browser's warning for the
 server's self-signed certificate, then sign in as `root` with realm **Linux PAM
-standard authentication**.
+standard authentication**. A "No valid subscription" message appears; this is
+normal, and **OK** dismisses it.
 
 Set up the no-subscription repository:
 
 1. Select the Proxmox node, then **Updates → Repositories**.
-2. Select the enterprise repository and choose **Disable**.
+2. Select the enterprise repository and choose **Disable**. Do the same for
+   the Ceph enterprise repository if it is listed.
 3. Choose **Add**, select **No-Subscription**, and confirm.
 4. Open **Updates**, choose **Refresh**, then **Upgrade**.
 5. Follow the prompts in the upgrade window and reboot if requested.

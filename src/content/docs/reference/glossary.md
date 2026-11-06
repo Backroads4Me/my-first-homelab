@@ -2,8 +2,10 @@
 title: Glossary
 description: Plain-language definitions for terms used in this guide.
 sidebar:
-  order: 2
+  order: 3
 ---
+
+**Bridge (`vmbr0`):** Proxmox's virtual network switch. Containers and virtual machines connect to it to reach your home network; `vmbr0` is Proxmox's default bridge.
 
 **Clone:** An independent copy of a container. A full clone copies all of its storage.
 
@@ -23,6 +25,8 @@ sidebar:
 
 **Nesting:** The Proxmox LXC feature that permits container technology such as Docker to run inside an LXC.
 
+**Port mapping (host:container):** A Docker setting that publishes a container's port on its host, written like `8080:80`. You reach the app at the host's address and the first port.
+
 **Proxmox VE:** The server operating system and web interface that manages virtual machines, LXC containers, storage, snapshots, and networking.
 
 **Snapshot:** A saved point in a container's filesystem and configuration that you can roll back to. Later changes are discarded during rollback.
@@ -32,6 +36,8 @@ sidebar:
 **Stack:** One or more services managed together from a Compose file.
 
 **Template:** A prepared Linux filesystem Proxmox uses to create an LXC.
+
+**Unprivileged container:** An LXC that runs as an ordinary user on the host. Root inside the container is not root on the host, so a mistake inside stays inside.
 
 **VM:** A virtual machine that behaves like a separate computer with its own operating system and virtual hardware.
 

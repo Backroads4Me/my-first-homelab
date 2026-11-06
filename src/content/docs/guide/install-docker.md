@@ -5,6 +5,10 @@ sidebar:
   order: 5
 ---
 
+Docker Engine runs the containers that power your apps, and the Compose plugin
+runs a whole app from a single Compose file. Install both from Docker's
+official repository.
+
 Run every command on this page in the VS Code terminal connected to the Debian container.
 
 ## Update Debian
@@ -40,9 +44,12 @@ docker run --rm hello-world
 docker compose version
 ```
 
+Docker downloads a test image and prints `Hello from Docker!`. The version
+command then prints the installed Compose version.
+
 ## Save a clean starting point
 
-In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snapshot**, name it `docker-clean`, and create it.
+In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snapshot**, enter `docker-clean` in the **Name** field, and choose **Take Snapshot**.
 
 This snapshot preserves the clean Docker installation. If a later experiment goes badly, you can return to this exact state instead of rebuilding the container.
 
