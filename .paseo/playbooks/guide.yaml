@@ -8,7 +8,7 @@ inputs:
   topic:
     type: string
     required: true
-    description: Topic or guide title to research and write (e.g. Setting up Home Assistant in LXC, Tailscale Remote Access, Proxmox Storage & ZFS)
+    description: "Page to write or revise, inside the scope in CONTRIBUTING.md (e.g. Revise Install Docker for Debian 13, Tighten Break It on Purpose)"
   audience_level:
     type: enum
     values: [beginner, intermediate]
@@ -125,7 +125,7 @@ steps:
       Research Notes:
       {{ inputs.research_notes }}
 
-      Implement the guide at {{ inputs.target_file }}. Follow Starlight styling, include verified commands, and write for the stated audience.
+      Implement the page at {{ inputs.target_file }}. Follow CONTRIBUTING.md, match the existing guides, and use only verified commands.
 
   - id: verify_build
     needs: [draft]

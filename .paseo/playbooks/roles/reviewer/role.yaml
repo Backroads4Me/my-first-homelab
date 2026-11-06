@@ -3,5 +3,5 @@ readonly: true
 agent:
   provider: omp
   model: google-antigravity/gemini-3.8-flash
-  thinking: medium
+  thinking: high
   mode: full
