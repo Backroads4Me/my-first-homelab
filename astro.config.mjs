@@ -6,6 +6,21 @@ import starlightThemeSix from "@six-tech/starlight-theme-six";
 import sitemap from "@astrojs/sitemap";
 import rehypeExternalLinks from "rehype-external-links";
 
+/** @type {NonNullable<import("@astrojs/starlight/types").StarlightUserConfig["sidebar"]>} */
+const sidebar = [
+  {
+    label: "The Path",
+    items: [
+      { autogenerate: { directory: "start-here" } },
+      { autogenerate: { directory: "guide" } },
+    ],
+  },
+  {
+    label: "Reference",
+    items: [{ autogenerate: { directory: "reference" } }],
+  },
+];
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://myfirsthomelab.com",
@@ -71,9 +86,6 @@ export default defineConfig({
           }),
         ],
         customCss: ["./src/styles/custom.css"],
-        components: {
-          Card: "starlight-plugin-icons/components/Card.astro",
-        },
         favicon: "/icons/favicon.svg",
         logo: {
           src: "./public/logo.svg",
@@ -87,19 +99,10 @@ export default defineConfig({
             href: "https://github.com/Backroads4Me/my-first-homelab",
           },
         ],
-        sidebar: [
-          {
-            label: "The Path",
-            items: [
-              { autogenerate: { directory: "start-here" } },
-              { autogenerate: { directory: "guide" } },
-            ],
-          },
-          {
-            label: "Reference",
-            items: [{ autogenerate: { directory: "reference" } }],
-          },
-        ],
+        // starlight-plugin-icons 1.1.6 types autogenerate entries in the pre-0.39 form (label
+        // required), which Starlight 0.39 rejects; the sidebar is checked against Starlight's
+        // own type in `sidebar` above instead.
+        sidebar: /** @type {any} */ (sidebar),
       },
     }),
   ],
