@@ -1,6 +1,6 @@
 ---
 title: Add Monitoring
-description: Add Beszel and Dozzle through Dockhand, then finish the core path.
+description: Add Beszel and Dozzle through Dockhand and save a known-good snapshot.
 sidebar:
   order: 9
 ---
@@ -27,6 +27,8 @@ services:
     volumes:
       - ./beszel_data:/beszel_data
       - ./beszel_socket:/beszel_socket
+    labels:
+      tsdproxy.enable: "true"
   beszel-agent:
     image: henrygd/beszel-agent:latest
     container_name: beszel-agent
@@ -67,6 +69,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./data:/data
+    labels:
+      tsdproxy.enable: "true"
 ```
 
 Open `http://CONTAINER-IP:8888`. Add Beszel and Dozzle to Heimdall with their URLs.

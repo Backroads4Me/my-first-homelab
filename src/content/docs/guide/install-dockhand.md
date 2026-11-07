@@ -32,7 +32,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/dockhand:/opt/dockhand
+    labels:
+      tsdproxy.enable: "true"
 ```
+
+Every app's Compose file in this guide has this `labels` entry. It does
+nothing yet; [Connect Remotely](/guide/connect-remotely/) uses it to reach your
+apps from anywhere.
 
 Start it:
 

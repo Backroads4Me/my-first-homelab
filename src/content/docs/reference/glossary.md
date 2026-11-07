@@ -35,7 +35,11 @@ sidebar:
 
 **Stack:** One or more services managed together from a Compose file.
 
+**Tailscale:** A service that joins your devices into a private network, called a tailnet, that works from anywhere without opening router ports.
+
 **Template:** A prepared Linux filesystem Proxmox uses to create an LXC.
+
+**TSDProxy:** A Docker app that gives each labeled container its own HTTPS address on your tailnet.
 
 **Unprivileged container:** An LXC that runs as an ordinary user on the host. Root inside the container is not root on the host, so a mistake inside stays inside.
 
@@ -52,3 +56,6 @@ sidebar:
 | Heimdall | 8080 | `http://CONTAINER-IP:8080` |
 | Beszel | 8090 | `http://CONTAINER-IP:8090` |
 | Dozzle | 8888 | `http://CONTAINER-IP:8888` |
+
+Away from home, each Docker app is also at `https://NAME.TAILNET.ts.net`, as
+set up in [Connect Remotely](/guide/connect-remotely/).

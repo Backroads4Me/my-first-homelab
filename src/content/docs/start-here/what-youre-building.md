@@ -7,7 +7,7 @@ sidebar:
 
 You are turning one old PC into a home server.
 
-Proxmox manages the server and gives you snapshots and clones. A Debian Linux container (LXC) holds Docker. Dockhand manages the Docker apps, Heimdall links to them, Beszel shows system health, and Dozzle shows container logs.
+Proxmox manages the server and gives you snapshots and clones. A Debian Linux container (LXC) holds Docker. Dockhand manages the Docker apps, Heimdall links to them, Beszel shows system health, and Dozzle shows container logs. Tailscale and TSDProxy let you reach those apps from your phone or laptop anywhere, without opening ports on your router.
 
 This guide makes the choices so you can get something working. You will
 outgrow parts of it later. Good. That means it did its job.
@@ -16,7 +16,7 @@ Proxmox recommends running application containers such as Docker inside a virtua
 
 ## The path
 
-Eight short tasks take you from a blank machine to a working lab. Each one
+Nine short tasks take you from a blank machine to a working lab. Each one
 ends with something working:
 
 1. Install Proxmox
@@ -27,6 +27,7 @@ ends with something working:
 6. Build Your Dashboard
 7. Break It on Purpose
 8. Add Monitoring
+9. Connect Remotely
 
 ## What you need
 

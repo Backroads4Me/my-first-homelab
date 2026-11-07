@@ -28,6 +28,8 @@ services:
       - ./config:/config
     ports:
       - "8080:80"
+    labels:
+      tsdproxy.enable: "true"
 ```
 
 4. Choose **Create & Start** and wait for the container status to show as running.

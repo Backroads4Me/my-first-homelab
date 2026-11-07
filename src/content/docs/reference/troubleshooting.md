@@ -64,6 +64,13 @@ will not open, run `docker ps` in the container terminal to find the
 conflicting name, then `docker rm -f NAME`. Redeploy the stack
 from the current guide page without changing its port.
 
+## An app does not open over Tailscale
+
+- Confirm the device you are using shows the Tailscale app as connected.
+- Confirm the app's Compose file has the `tsdproxy.enable: "true"` label, then redeploy its stack.
+- Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in the `tsdproxy` stack, and choose **Save & redeploy**.
+- The first visit to each address can take a minute while it gets its certificate. If it never loads, confirm **Enable HTTPS** is on in the Tailscale admin console's DNS page.
+
 ## I broke it
 
 Stop changing things. In Proxmox, select the Debian container, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded. Rollback leaves the container stopped, so start it again in Proxmox before reconnecting.
