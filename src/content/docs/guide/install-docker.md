@@ -47,3 +47,5 @@ In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snaps
 This snapshot preserves the clean Docker installation. If a later experiment goes badly, you can return to this exact state instead of rebuilding the container.
 
 Docker works, and you have your first safety net.
+
+**[Next: Install Dockhand →](/guide/install-dockhand/)**

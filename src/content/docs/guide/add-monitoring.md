@@ -71,3 +71,5 @@ You now have Proxmox, a lightweight Debian container, Docker, a dashboard,
 health monitoring, and live logs. You have also proved you can undo a mistake.
 Take one final snapshot named `core-complete`, and make **snapshot before every
 experiment** your homelab habit.
+
+**[Next Steps: Where to Go from Here →](/reference/next-steps/)**

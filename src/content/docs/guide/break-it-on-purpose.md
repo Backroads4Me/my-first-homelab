@@ -36,3 +36,5 @@ restart the original.
 A clone is a safe sandbox for a larger experiment and a starting template for your next server.
 
 You have proved you can break something and get it back.
+
+**[Next: Add Monitoring →](/guide/add-monitoring/)**

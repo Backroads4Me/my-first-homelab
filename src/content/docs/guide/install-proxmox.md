@@ -51,3 +51,5 @@ Set up the no-subscription repository:
 5. Follow the prompts in the upgrade window and reboot if requested.
 
 You now have an updated Proxmox server.
+
+**[Next: Set Up VS Code →](/guide/set-up-vscode/)**

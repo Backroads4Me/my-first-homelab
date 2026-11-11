@@ -31,7 +31,7 @@ Copy the single output line. In Proxmox, choose **Create CT** and complete the w
 7. **DNS:** keep **Use host settings**.
 8. Confirm the settings and create the container.
 
-Select the new container, open **Options → Features**, choose **Edit**, enable **Nesting**, and save. Docker will not start without nesting.
+Select the new container, open **Options → Features**, choose **Edit**, enable **Nesting** and **keyctl**, and save. Docker will not start without nesting.
 
 Start the container. Its **Summary** page shows the DHCP address. Return to
 your router's admin page and create a DHCP reservation for the container named
@@ -48,3 +48,5 @@ cat /etc/debian_version
 ```
 
 You now have a Debian 13 LXC with key-based root SSH.
+
+**[Next: Install Docker →](/guide/install-docker/)**

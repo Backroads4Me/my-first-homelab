@@ -24,3 +24,5 @@ Proxmox recommends running application containers such as Docker inside a virtua
 - A weekend of curiosity
 
 The best hardware is what you already have.
+
+**[Next: Install Proxmox →](/guide/install-proxmox/)**

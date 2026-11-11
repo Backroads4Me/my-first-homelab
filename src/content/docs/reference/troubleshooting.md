@@ -22,6 +22,10 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 
 The browser certificate warning is expected for a new Proxmox server. Accept it only when the address is your server's address.
 
+## Proxmox shows "No valid subscription"
+
+The dialog saying "You do not have a valid subscription for this server" appears whenever you sign into the Proxmox web interface without an enterprise subscription key. This is expected. Select **OK** to dismiss the notice; the server is fully functional and updates come from the no-subscription repository configured in the guide.
+
 ## SSH says connection refused
 
 - Confirm the target IP. The Proxmox host and Debian container have different addresses.
@@ -31,9 +35,15 @@ The browser certificate warning is expected for a new Proxmox server. Accept it 
 
 If SSH rejects the key, use the Proxmox console to compare `/root/.ssh/authorized_keys` with the output of `ssh-keygen -y -f ~/.ssh/id_ed25519` on your everyday computer.
 
+## The Debian container has no network address
+
+- Confirm the container is connected to bridge `vmbr0` in Proxmox under the container's **Network** settings.
+- Check that your router's DHCP server is running and has available addresses.
+- Open the container's **Console** in Proxmox, sign in as `root`, and run `systemctl restart systemd-networkd`.
+
 ## Docker will not start in the LXC
 
-Select the Debian container in Proxmox, open **Options → Features**, and confirm **Nesting** is enabled. Restart the container after changing it, then run:
+Select the Debian container in Proxmox, open **Options → Features**, and confirm **Nesting** and **keyctl** are enabled. Restart the container after changing it, then run:
 
 ```bash
 systemctl status docker --no-pager

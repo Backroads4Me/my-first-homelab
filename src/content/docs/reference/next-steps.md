@@ -15,3 +15,5 @@ make one careful experiment through Dockhand.
 You will outgrow this guide. That was always the plan. It leaves you with a
 working system and the confidence to break it, fix it, and choose what comes
 next.
+
+**[Further Reading: Communities & Docs →](/reference/further-reading/)**

@@ -47,3 +47,5 @@ Accept the host fingerprint when prompted and enter the Proxmox root password. T
 The lower-left corner now shows the remote host. Open **Terminal → New Terminal** and run `hostname`; it should print `pve`.
 
 Your workstation is ready.
+
+**[Next: Create Your Container →](/guide/create-your-container/)**

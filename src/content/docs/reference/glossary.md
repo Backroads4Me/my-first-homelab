@@ -19,6 +19,8 @@ sidebar:
 
 **Image:** A packaged, read-only application used to create a Docker container.
 
+**Keyctl:** A Linux kernel facility that manages security keys and tokens, required by modern systemd inside an unprivileged container.
+
 **LXC:** The Linux container technology Proxmox uses for lightweight system containers.
 
 **Nesting:** The Proxmox LXC feature that permits container technology such as Docker to run inside an LXC.
