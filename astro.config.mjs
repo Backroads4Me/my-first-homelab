@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import Icons from "starlight-plugin-icons";
 import UnoCSS from "unocss/astro";
 import starlightThemeSix from "@six-tech/starlight-theme-six";
@@ -27,9 +28,11 @@ export default defineConfig({
   output: "static",
 
   markdown: {
-    rehypePlugins: [
-      [rehypeExternalLinks, { target: "_blank", rel: ["noopener"] }],
-    ],
+    processor: unified({
+      rehypePlugins: [
+        [rehypeExternalLinks, { target: "_blank", rel: ["noopener"] }],
+      ],
+    }),
   },
 
   integrations: [
@@ -38,6 +41,7 @@ export default defineConfig({
     Icons({
       starlight: {
         title: "MyFirstHomelab",
+        disable404Route: true,
         head: [
           {
             tag: "link",
