@@ -3,7 +3,8 @@
 /* =========================== */
 @layer starlight, six, homelab;
 
-/* Sidebar text: in starlight layer to beat Six !important */
+/* Overrides of Six's !important rules go in the starlight layer: among
+   !important declarations the earliest layer wins. */
 @layer starlight {
   /* Inactive links: darker gray, heavier weight in light mode */
   :root[data-theme="light"] .entry-link {
@@ -15,6 +16,24 @@
   :root[data-theme="light"] .entry-link[aria-current="true"],
   :root .entry-link:hover {
     color: #ffffff !important;
+  }
+
+  /* Six colors the primary button label with the accent foreground, which is
+     dark navy in light mode; white keeps the label readable on the brand
+     blue. */
+  :root[data-theme="light"] .hero .actions a.primary {
+    color: #ffffff !important;
+  }
+
+  /* Light mode links in the brand blue, so body text is not black
+     throughout. */
+  :root[data-theme="light"] .sl-markdown-content a:not(.sl-anchor-link):not(.sl-link-button):not(:where(.not-content *)) {
+    color: var(--sl-color-accent) !important;
+  }
+
+  /* Light mode cards carry dark text on a pale tint. */
+  :root[data-theme="light"] .card-grid .card p {
+    color: var(--foreground) !important;
   }
 }
 
@@ -77,6 +96,19 @@
     padding: 1.75rem;
     border-radius: 0.5rem;
   }
+
+  /* Light mode cards: a pale brand tint with dark text. The filled teal card
+     is kept for dark mode, where it sits on a dark page. */
+  :root[data-theme="light"] .card-grid .card {
+    background: color-mix(in srgb, var(--primary) 9%, #ffffff) !important;
+    border-color: color-mix(in srgb, var(--primary) 35%, transparent) !important;
+    color: var(--foreground) !important;
+  }
+
+  :root[data-theme="light"] .card-grid .card > .title,
+  :root[data-theme="light"] .card-grid .starlight-card__title {
+    color: var(--foreground-light) !important;
+  }
 }
 
 /* Sidebar section titles */
@@ -111,6 +143,19 @@ html body .hero .actions a.primary {
   padding-inline: 1.75rem !important;
   font-size: clamp(1.1rem, 1.75vw, 1.35rem) !important;
   font-weight: 700 !important;
+}
+
+/* Second hero button: an outline in the brand color, so it reads as a button
+   on both the light and dark page backgrounds without competing with the
+   filled primary button. */
+html body .hero .actions a.secondary {
+  min-height: 3.25rem !important;
+  padding-inline: 1.5rem !important;
+  border: 2px solid var(--primary) !important;
+  background: transparent !important;
+  color: var(--foreground) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
 }
 
 /* Site footer */
@@ -246,7 +291,26 @@ main > .markdown-wrapper > .sl-markdown-content {
 }
 
 html:not([data-theme="dark"]) {
-  --background: #f7f6f3;
+  --background: #f8fafc;
+}
+
+/* Light mode: white code blocks with a border, so they stand out from the
+   page background. */
+:root[data-theme="light"] .expressive-code {
+  --ec-codeBg: #ffffff;
+  --ec-frm-edBg: #ffffff;
+  --ec-frm-trmBg: #ffffff;
+}
+
+:root[data-theme="light"] .expressive-code .frame {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* The logo's cyan glow is tuned for the dark background. */
+:root[data-theme="light"] .hero > img {
+  filter: none;
 }
 
 html[data-theme="dark"] {
