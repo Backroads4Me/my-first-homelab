@@ -170,6 +170,7 @@ main > .markdown-wrapper > .sl-markdown-content {
   text-align: center;
   margin-inline: auto;
   max-width: 46rem;
+  padding-bottom: 0 !important;
 }
 
 .hero > img {
