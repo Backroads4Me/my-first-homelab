@@ -2,8 +2,8 @@
 title: Add Monitoring
 description: Add Beszel and Dozzle through Dockhand and save a known-good snapshot.
 sidebar:
-  label: 9. Add Monitoring
-  order: 10
+  label: 8. Add Monitoring
+  order: 9
 ---
 
 Beszel shows your LXC's health: processor, memory, disk, and
@@ -46,13 +46,15 @@ services:
       KEY: "REPLACE_AFTER_ADDING_SYSTEM"
 ```
 
-Open `http://LXC-IP:8090` and create your admin account. Choose **Add
-System**. Enter a **Name** such as `homelab` and enter
+Open `http://LXC-IP:8090` and create your admin account. Choose **Add System**.
+Enter a **Name** such as `docker` (the LXC hostname) and enter
 `/beszel_socket/beszel.sock` for **Host / IP**. Copy the generated token and
-public key into the matching values in Dockhand's stack editor, then choose
-**Save & redeploy**. The `beszel-agent` container logs errors until these
-credentials are saved; that is normal. Return to Beszel and choose **Add
-System** in the dialog to finish. The system status should turn green.
+public key into the matching `TOKEN` and `KEY` environment variables in
+Dockhand's stack editor, then choose **Save & redeploy**. The `beszel-agent`
+container may log authentication errors until it restarts with the correct
+credentials; this is normal during initial setup. Return to Beszel and choose
+**Add System** in the dialog to complete registration. The system status should
+turn green.
 
 ## Add Dozzle
 
@@ -66,18 +68,17 @@ services:
     container_name: dozzle
     restart: unless-stopped
     ports:
-      - "8888:8080"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /opt/volumes/dozzle/data:/data
     labels:
       tsdproxy.enable: "true"
 ```
 
-Open `http://LXC-IP:8888`. Add Beszel and Dozzle to Heimdall with their URLs.
+Open `http://LXC-IP:8080`. Add Beszel and Dozzle to Heimdall with their URLs.
 
 In Proxmox, select your LXC, open **Snapshots**, choose **Take
-Snapshot**, enter `core-complete` in the **Name** field, and choose **Take
-Snapshot**.
+Snapshot**, enter `monitoring-installed` in the **Name** field, and choose **Take
+Snapshot**. Then select `working-dashboard` and choose **Delete**, so only the newest snapshot remains.
 
 You now have health monitoring and live logs.

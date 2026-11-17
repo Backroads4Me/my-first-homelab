@@ -10,7 +10,7 @@ This task turns the old PC into a Proxmox server you can manage from a browser.
 
 ## Make the installer
 
-1. Download the current **Proxmox VE ISO Installer** from [Proxmox Downloads](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso).
+1. Download the current **Proxmox VE ISO Installer** from [Proxmox Downloads](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso). Take the entry whose name does not say `ARM64`.
 2. Install [balenaEtcher](https://etcher.balena.io/) on your everyday computer.
 3. Insert the USB stick and open Etcher.
 4. Choose **Flash from file**, select the Proxmox ISO, choose the USB stick, then select **Flash**.

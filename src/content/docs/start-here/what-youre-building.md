@@ -42,9 +42,9 @@ Ten short tasks take you from a blank machine to a working lab:
 5. Install Docker
 6. Install Dockhand
 7. Build Your Dashboard
-8. Break It on Purpose
-9. Add Monitoring
-10. Connect Remotely
+8. Add Monitoring
+9. Connect Remotely
+10. Perform a Rollback
 
 ## What you need
 

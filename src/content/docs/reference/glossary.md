@@ -37,9 +37,9 @@ sidebar:
 
 **SSH:** An encrypted connection used by VS Code and its terminal to work on another computer.
 
-**Stack:** One or more services managed together from a Compose file.
+**Stack:** The containers a single Docker Compose file starts and manages together.
 
-**Tailscale:** A service that joins your devices into a private network, called a tailnet, that works from anywhere without opening router ports.
+**Tailscale:** A service that joins your devices into a private network, called a tailnet, that works from anywhere.
 
 **Template:** A prepared Linux filesystem Proxmox uses to create an LXC.
 
@@ -50,16 +50,3 @@ sidebar:
 **VM:** A virtual machine that behaves like a separate computer with its own operating system and virtual hardware.
 
 **Volume:** Persistent data stored outside a Docker container's disposable filesystem.
-
-## Ports used in this guide
-
-| Service | Port | Address form |
-| --- | ---: | --- |
-| Proxmox | 8006 | `https://PROXMOX-IP:8006` |
-| Dockhand | 3000 | `http://LXC-IP:3000` |
-| Heimdall | 8080 | `http://LXC-IP:8080` |
-| Beszel | 8090 | `http://LXC-IP:8090` |
-| Dozzle | 8888 | `http://LXC-IP:8888` |
-
-Away from home, each Docker app is also at `https://NAME.TAILNET.ts.net`, as
-set up in [Connect Remotely](/guide/connect-remotely/).

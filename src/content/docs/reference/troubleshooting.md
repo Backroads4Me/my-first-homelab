@@ -9,9 +9,9 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 
 ## The USB stick will not boot
 
-- Reflash the Proxmox ISO with balenaEtcher and let validation finish.
 - Use the PC's one-time boot menu, usually `F12`, `F2`, or `Del`, and select the USB stick.
 - In BIOS settings, enable USB boot.
+- Reflash the Proxmox ISO with balenaEtcher and let validation finish.
 
 ## Proxmox does not open on port 8006
 
@@ -80,9 +80,3 @@ from the current guide page without changing its port.
 - Confirm the app's Compose file has the `tsdproxy.enable: "true"` label, then redeploy its stack.
 - Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in `/opt/volumes/tsdproxy/config/tsdproxy.yaml`, and restart the `tsdproxy` stack.
 - The first visit to each address can take a minute while it gets its certificate. If it never loads, confirm **Enable HTTPS** is on in the Tailscale admin console's DNS page.
-
-## I broke it
-
-Stop changing things. In Proxmox, select your LXC, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded. Rollback leaves the LXC stopped, so start it again in Proxmox before reconnecting.
-
-If there is no snapshot, inspect the affected stack's logs in Dockhand or Dozzle before deleting anything.

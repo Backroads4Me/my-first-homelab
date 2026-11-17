@@ -1,26 +1,25 @@
 ---
 title: Connect Remotely
-description: Reach your apps from anywhere with Tailscale and TSDProxy, without opening any ports.
+description: Reach your apps from anywhere with Tailscale and TSDProxy.
 sidebar:
-  label: 10. Connect Remotely
-  order: 11
+  label: 9. Connect Remotely
+  order: 10
 ---
 
 Your apps only work at home so far. This task lets you open them from your
-phone or laptop anywhere, without opening a single port on your router.
+phone or laptop anywhere, without exposing your home network to risk.
 
-Tailscale builds a private network between the devices you sign in to it.
-TSDProxy watches Docker and gives every app with the `tsdproxy.enable` label
-its own address on that network, with a real HTTPS certificate. That label is
-the one you added to every Compose file earlier. Only devices signed in to
-your Tailscale account can reach these addresses.
+Tailscale creates a secure private network that connects all the devices signed
+in to your account. TSDProxy automatically gives each Docker app with the
+`tsdproxy.enable` label its own private address on that network. This makes your
+apps accessible from any of your signed-in devices.
 
 ## Create your Tailscale account
 
 Sign up at [login.tailscale.com/start](https://login.tailscale.com/start). The
 free Personal plan covers everything in this guide.
 
-Then install the Tailscale app on your everyday computer and your phone, and
+Then install the Tailscale app on your everyday computer and optionally your phone, and
 sign in with the same account. Tailscale's own install guides walk through each
 one; you do not need to change any settings in the app:
 
@@ -32,21 +31,17 @@ one; you do not need to change any settings in the app:
 
 ## Turn on HTTPS
 
-1. In the Tailscale admin console, open the
+1. In the [Tailscale admin console](https://console.tailscale.com), open the
    [DNS](https://console.tailscale.com/admin/dns) page.
 2. Confirm **MagicDNS** is enabled.
 3. Under **HTTPS Certificates**, choose **Enable HTTPS** and accept the notice.
-
-The notice says machine names are published in public certificate logs. Your
-app names (`dockhand`, `heimdall`, `beszel`, `dozzle`) are the only names this
-publishes.
 
 ## Create an auth key
 
 TSDProxy uses an auth key to add your apps to Tailscale without a browser
 sign-in for each one.
 
-1. Open the [Keys](https://console.tailscale.com/admin/settings/keys) page.
+1. In the [Tailscale admin console](https://console.tailscale.com), open **Settings** and choose the [Keys](https://console.tailscale.com/admin/settings/keys) page.
 2. Choose **Generate auth key**.
 3. Enter `tsdproxy` as the description, turn on **Reusable**, and leave the
    expiration at 90 days.
@@ -97,8 +92,11 @@ Within a minute or two, the
 menu at the end of its row and choose **Disable Key Expiry**. Otherwise
 Tailscale asks each app to sign in again after 180 days.
 
+The examples below use `tail1234` as the tailnet name. Tailscale chose yours
+when you created your account, so your addresses will differ from these.
+
 Select `heimdall` on the Machines page to see its full address, such as
-`heimdall.tail1234.ts.net`. On your phone, turn off Wi-Fi, make sure the
+`heimdall.tail1234.ts.net`. On your phone, if you set it up, turn off Wi-Fi, make sure the
 Tailscale app is connected, and open `https://heimdall.tail1234.ts.net` with
 your own address. The first visit to each app can take a minute while it gets
 its certificate.
@@ -110,18 +108,36 @@ The auth key expires after 90 days. That only matters when you add a new app;
 generate a new key then, replace the old one in `tsdproxy.yaml`, and restart
 the `tsdproxy` stack.
 
+## Add Proxmox to Tailscale
+
+The apps are reachable from anywhere; Proxmox itself is not yet. In Proxmox,
+select `pve` in the tree on the left, choose **Shell**, and paste these
+commands:
+
+```bash
+curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
+apt update && apt install -y tailscale
+tailscale up
+```
+
+`tailscale up` prints an address. Open it in your browser and sign in to
+Tailscale to add the machine. Within a minute the
+[Machines](https://console.tailscale.com/admin/machines) page lists `pve`
+beside your apps, and Proxmox is at `https://pve.tail1234.ts.net:8006`, with
+your own tailnet name in place of `tail1234`.
+
 ## Update your dashboard
 
 Heimdall's tiles still point to your home addresses, which do not work away
-from home. In Heimdall, open the application list, edit the Dockhand, Beszel,
-and Dozzle tiles, and replace each **URL** with the app's `https://` Tailscale
-address. These addresses work at home too, on any device with Tailscale
-connected. The Proxmox tile keeps its home address; Proxmox itself stays
-reachable only at home.
+from home. In Heimdall, open the **Application list**, edit the Proxmox,
+Dockhand, Beszel, and Dozzle tiles, and replace each **URL** with the app's
+`https://` Tailscale address. The Proxmox tile keeps its `:8006` port. These
+addresses work at home too, on any device with Tailscale connected.
 
 In Proxmox, select your LXC, open **Snapshots**, choose **Take
 Snapshot**, enter `remote-access` in the **Name** field, and choose **Take
-Snapshot**.
+Snapshot**. Then select `monitoring-installed` and choose **Delete**, so only the newest snapshot remains.
 
 You now have Proxmox, an LXC, Docker, a dashboard, monitoring,
 live logs, and remote access. The path is complete.

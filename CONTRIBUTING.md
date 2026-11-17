@@ -21,14 +21,14 @@ The site teaches exactly one opinionated path:
 5. Install Docker + Compose in the LXC; snapshot (`docker-clean`)
 6. Install Dockhand via a Compose file
 7. Deploy Heimdall through the Dockhand UI; snapshot (`working-dashboard`)
-8. **Break it on purpose**: delete the dashboard, roll back the snapshot,
-   clone the LXC. Proving recovery works is the emotional core of
-   the site.
-9. Add Beszel and Dozzle through Dockhand; snapshot (`core-complete`)
-10. Connect remotely: create a Tailscale account, install TSDProxy through
+8. Add Beszel and Dozzle through Dockhand; snapshot (`monitoring-installed`)
+9. Connect remotely: create a Tailscale account, install TSDProxy through
    Dockhand, and reach every app over the tailnet with HTTPS; snapshot
    (`remote-access`). Point readers to Tailscale's own install guides for
    the computer and phone apps instead of re-writing them.
+10. **Perform a rollback**: delete the dashboard, roll back the snapshot,
+    clone the LXC. Proving recovery works is the emotional core of
+    the site.
 
 ### The LXC decision
 
@@ -77,7 +77,7 @@ guide changes, update that page too.
 - `docker compose` (v2), never `docker-compose`. Compose files are named
   `compose.yaml`.
 - Chosen stack: Dockhand (management UI, port 3000), Heimdall (dashboard,
-  8080), Beszel (monitoring, 8090), Dozzle (logs, 8888), TSDProxy
+  port 80), Beszel (monitoring, 8090), Dozzle (logs, 8080), TSDProxy
   (`almeidapaulopt/tsdproxy:2`, remote access over Tailscale, no published
   port).
 - Every app's Compose file carries the label `tsdproxy.enable: "true"` from

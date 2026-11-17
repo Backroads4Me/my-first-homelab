@@ -26,7 +26,7 @@ Copy the single output line. Then complete the **Create CT** wizard in Proxmox:
 1. Select **pve** in the tree on the left to return to the node's main page, then choose **Create CT** in the top-right corner.
 2. **General:** use hostname `docker`, set a root password, paste the SSH key you copied above into **SSH public key**, and leave **Unprivileged container** and **Nesting** checked. Docker needs nesting to run.
 3. **Template:** select the Debian 13 template.
-4. **Disks:** set **Disk size** to `16` GiB.
+4. **Disks:** keep **Storage** as `local-lvm` and set **Disk size** to `16` GiB. Snapshots work only on `local-lvm`, not on directory storage.
 5. **CPU:** set **Cores** to `2`.
 6. **Memory:** set **Memory** to `4096` MiB and **Swap** to `512` MiB.
 7. **Network:** keep bridge `vmbr0`, choose **DHCP** for IPv4, and set IPv6 to **Static** with its fields left empty.
