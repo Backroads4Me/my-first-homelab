@@ -1,9 +1,9 @@
-# MyFirstHomelab.com — Guiding Principles
+# MyFirstHomelab.com - Guiding Principles
 
 ## Mission
 
 Get a brand-new user from "old PC in a closet" to a small, working,
-recoverable homelab — as simply as possible. Nothing else.
+recoverable homelab - as simply as possible. Nothing else.
 
 The reader is a beginner with limited technical experience. They are nervous
 about breaking things. The site's job is to remove choices, remove fear, and
@@ -20,9 +20,13 @@ The site teaches exactly one opinionated path:
 5. Install Dockhand via a Compose file
 6. Deploy Heimdall through the Dockhand UI; snapshot (`working-dashboard`)
 7. **Break it on purpose**: delete the dashboard, roll back the snapshot,
-   clone the container — proving recovery works is the emotional core of
-   the site
-8. Add Beszel and Dozzle through Dockhand
+   clone the container. Proving recovery works is the emotional core of
+   the site.
+8. Add Beszel and Dozzle through Dockhand; snapshot (`core-complete`)
+9. Connect remotely: create a Tailscale account, install TSDProxy through
+   Dockhand, and reach every app over the tailnet with HTTPS; snapshot
+   (`remote-access`). Point readers to Tailscale's own install guides for
+   the computer and phone apps instead of re-writing them.
 
 ### The LXC decision
 
@@ -34,7 +38,7 @@ and make it easy to fix a mistake.
 ### Opinionated by design (say it, own it)
 
 The path is deliberately opinionated for simplicity and speed. Readers are
-fully expected to outgrow it — that is the guide working as intended. This
+fully expected to outgrow it. That is the guide working as intended. This
 framing appears on the Start Here page and in the Next Steps send-off.
 
 ## Writing Rules
@@ -44,11 +48,13 @@ framing appears on the Start Here page and in the Next Steps send-off.
 2. **No caveats** unless ignoring one breaks the very next step. No "on older
    releases…", "advanced users might…", "in production you would…".
 3. **Task-shaped pages.** One page = one sitting. Every page ends with
-   something working and a link to the next page.
+   something working and a link to the next page. Starlight's Next link,
+   driven by `sidebar.order`, provides that link; do not add a second one in
+   the text.
 4. **Short.** Pages stay under ~150 lines of markdown. If it grows past
-   that, try to cut — do not split into more pages.
+   that, try to cut; do not split into more pages.
 5. **Single-author voice.** Neutral second-person instructions ("you",
-   "this guide"). "I" sparingly for personal asides. NEVER "we/we're/our" —
+   "this guide"). "I" sparingly for personal asides. NEVER "we/we're/our";
    the site has one author.
 6. **UI over shell** wherever the Proxmox web interface can do the job
    (updates, repositories, snapshots, clones). The shell appears only inside
@@ -67,10 +73,16 @@ framing appears on the Start Here page and in the Next Steps send-off.
 - `docker compose` (v2), never `docker-compose`. Compose files are named
   `compose.yaml`.
 - Chosen stack: Dockhand (management UI, port 3000), Heimdall (dashboard,
-  8080/8443), Beszel (monitoring, 8090), Dozzle (logs, 8888).
+  8080), Beszel (monitoring, 8090), Dozzle (logs, 8888), TSDProxy
+  (`almeidapaulopt/tsdproxy:2`, remote access over Tailscale, no published
+  port).
+- Every app's Compose file carries the label `tsdproxy.enable: "true"` from
+  the page that introduces it. Earlier pages say the Connect Remotely page
+  explains it.
 - No unattended updates: back up, read release notes, update deliberately.
-- Management interfaces stay on the trusted home network; never imply a port
-  should be exposed to the internet.
+- Management interfaces stay on the home network and the reader's private
+  tailnet. Never expose a port to the internet: no router port forwarding,
+  no Tailscale Funnel, no public tunnels.
 
 ## Scope Boundaries
 
@@ -78,5 +90,7 @@ In scope: the one path above, plus slim reference pages (troubleshooting
 keyed to this path's exact steps, a trimmed glossary, next steps, further
 reading).
 
-Out of scope: future "advanced" material, VMs, Proxmox Backup
-Server, remote access/tunnels, TLS, VLANs, clustering, additional apps.
+Out of scope: future "advanced" material, VMs, Proxmox Backup Server,
+public exposure (port forwarding, Tailscale Funnel, Cloudflare tunnels),
+reverse proxies and certificates for home addresses, VLANs, clustering,
+additional apps.

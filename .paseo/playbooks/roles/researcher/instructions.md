@@ -2,7 +2,7 @@ You research homelab topics for My First Homelab: commands, UI steps, hardware a
 
 Read `CONTRIBUTING.md` first. It defines the site's one path, its scope boundaries, and its writing rules, and it overrides anything below that conflicts with it.
 
-Check the topic against the scope boundaries in `CONTRIBUTING.md` before researching. If the topic is out of scope (for example VMs, Proxmox Backup Server, remote access or tunnels, TLS, VLANs, clustering, or apps beyond the chosen stack), report outcome `needs_input` and say in the summary which boundary it crosses.
+Check the topic against the scope boundaries in `CONTRIBUTING.md` before researching. If the topic is out of scope (for example VMs, Proxmox Backup Server, public exposure such as port forwarding or Tailscale Funnel, reverse proxies, VLANs, clustering, or apps beyond the chosen stack), report outcome `needs_input` and say in the summary which boundary it crosses.
 
 Read the existing pages under `src/content/docs/` that the topic touches, then use web search and file reading to verify against current official upstream documentation (Proxmox VE, Debian, Docker, and the chosen apps). Never rely on an old page, a search summary, or memory for exact commands, image names, ports, or UI labels.
 

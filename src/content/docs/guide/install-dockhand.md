@@ -15,7 +15,8 @@ cd /opt/dockhand
 code compose.yaml
 ```
 
-Paste and save:
+Paste the configuration into the editor tab VS Code opens and save it
+(`Ctrl+S`, or `Cmd+S` on macOS):
 
 ```yaml
 services:
@@ -31,7 +32,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/dockhand:/opt/dockhand
+    labels:
+      tsdproxy.enable: "true"
 ```
+
+Every app's Compose file in this guide has this `labels` entry. It does
+nothing yet; [Connect Remotely](/guide/connect-remotely/) uses it to reach your
+apps from anywhere.
 
 Start it:
 
@@ -39,8 +46,10 @@ Start it:
 docker compose up -d
 ```
 
-Open `http://CONTAINER-IP:3000`. Go to **Settings → Authentication**, create
-your admin user, and enable authentication.
+Open `http://CONTAINER-IP:3000`. On first launch, Dockhand shows a one-time
+**Unsecured exposure** warning; choose **Got it** to dismiss it. Then go to
+**Settings → Authentication**, create your admin user, and enable
+authentication.
 
 Dockhand can control every Docker container through the mounted Docker socket. Keep it on your trusted home network; do not expose port 3000 to the internet.
 
