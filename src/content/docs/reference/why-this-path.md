@@ -24,8 +24,9 @@ gets a beginner to a working result with the fewest decisions.
   machine for Docker. The guide uses an unprivileged LXC because its snapshots
   and clones are fast and light on modest hardware, which makes mistakes cheap
   to undo.
-- **One container for every app.** Separate containers isolate apps better.
-  One container means one thing to snapshot and one address to remember.
+- **One Debian container holds every app.** Many homelabs give each app its
+  own LXC or virtual machine, which isolates them from each other. Here a
+  single snapshot covers everything, and every app is at the same address.
 - **An SSH key with no passphrase.** SSH on the server is reachable only from
   the home network, and a passphrase is one more place for a beginner to get
   stuck.
@@ -38,7 +39,7 @@ gets a beginner to a working result with the fewest decisions.
 - **Few apps.** The guide installs a dashboard, monitoring, and a log viewer,
   and stops there. Choosing what to run next is the reader's job.
 
-## You are expected to outgrow it
+## Readers are expected to outgrow it
 
 The guide is a starting point. A reader who finishes it and then moves Docker
 into a virtual machine, adds backups, or replaces half the tools has used it
@@ -52,6 +53,11 @@ is wrong, unclear, or out of date is the most useful thing to report.
 - [Open an issue](https://github.com/Backroads4Me/my-first-homelab/issues) to report a problem or suggest a change.
 - Read the [contributing guide](https://github.com/Backroads4Me/my-first-homelab/blob/main/CONTRIBUTING.md) before a pull request. It lists the writing rules and what is out of scope.
 
-A suggestion that adds a second way to do a step will probably be declined,
-because one path is the point. A simpler or safer way to do the same step is
-welcome.
+Additions are welcome too. I would like the site to grow a second phase that
+picks up where the nine tasks end, with a few more pieces to build. Ideas for
+that phase, and links worth adding to
+[Further Reading](/reference/further-reading/), are both useful.
+
+The nine tasks themselves stay one path. A suggestion that adds a second way
+to do one of those steps will probably be declined. A simpler or safer way to
+do the same step is welcome.
