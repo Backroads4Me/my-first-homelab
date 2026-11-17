@@ -24,10 +24,10 @@ gets a beginner to a working result with the fewest decisions.
   machine for Docker. The guide uses an unprivileged LXC because its snapshots
   and clones are fast and light on modest hardware, which makes mistakes cheap
   to undo.
-- **One Debian container holds every app.** Many homelabs give each app its
+- **One LXC holds every app.** Many homelabs give each app its
   own LXC or virtual machine, which isolates them from each other. Here a
   single snapshot covers everything, and every app is at the same address.
-- **An SSH key with no passphrase.** SSH on the server is reachable only from
+- **An SSH key with no passphrase.** SSH on the LXC is reachable only from
   the home network, and a passphrase is one more place for a beginner to get
   stuck.
 - **A web interface for Docker.** Dockhand lets the reader deploy and change
@@ -60,10 +60,10 @@ is wrong, unclear, or out of date is the most useful thing to report.
 - Read the [contributing guide](https://github.com/Backroads4Me/my-first-homelab/blob/main/CONTRIBUTING.md) before a pull request. It lists the writing rules and what is out of scope.
 
 Additions are welcome too. I would like the site to grow a second phase that
-picks up where the nine tasks end, with a few more pieces to build. Ideas for
+picks up where the ten tasks end, with a few more pieces to build. Ideas for
 that phase, and links worth adding to
 [Further Reading](/reference/further-reading/), are both useful.
 
-The nine tasks themselves stay one path. A suggestion that adds a second way
+The ten tasks themselves stay one path. A suggestion that adds a second way
 to do one of those steps will probably be declined. A simpler or safer way to
 do the same step is welcome.

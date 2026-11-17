@@ -13,20 +13,22 @@ deliver a working result fast to build confidence.
 
 The site teaches exactly one opinionated path:
 
-1. Install Proxmox VE on an old PC (direct install, no alternatives)
-2. Set up VS Code with Remote-SSH on the reader's everyday computer
-3. Create one unprivileged Debian LXC
-4. Install Docker + Compose in the LXC; snapshot (`docker-clean`)
-5. Install Dockhand via a Compose file
-6. Deploy Heimdall through the Dockhand UI; snapshot (`working-dashboard`)
-7. **Break it on purpose**: delete the dashboard, roll back the snapshot,
-   clone the container. Proving recovery works is the emotional core of
-   the site.
-8. Add Beszel and Dozzle through Dockhand; snapshot (`core-complete`)
+1. Set up VS Code with Remote-SSH on the reader's everyday computer, and create
+   the SSH key the LXC will use
+2. Install Proxmox VE on an old PC (direct install, no alternatives)
+3. Create one unprivileged Debian LXC, injecting that SSH key
+4. Connect VS Code to the LXC over SSH and update Debian
+5. Install Docker + Compose in the LXC; snapshot (`docker-clean`)
+6. Install Dockhand via a Compose file
+7. Deploy Heimdall through the Dockhand UI; snapshot (`working-dashboard`)
+8. Add Beszel and Dozzle through Dockhand; snapshot (`monitoring-installed`)
 9. Connect remotely: create a Tailscale account, install TSDProxy through
    Dockhand, and reach every app over the tailnet with HTTPS; snapshot
    (`remote-access`). Point readers to Tailscale's own install guides for
    the computer and phone apps instead of re-writing them.
+10. **Perform a rollback**: delete the dashboard, roll back the snapshot,
+    clone the LXC. Proving recovery works is the emotional core of
+    the site.
 
 ### The LXC decision
 
@@ -75,7 +77,7 @@ guide changes, update that page too.
 - `docker compose` (v2), never `docker-compose`. Compose files are named
   `compose.yaml`.
 - Chosen stack: Dockhand (management UI, port 3000), Heimdall (dashboard,
-  8080), Beszel (monitoring, 8090), Dozzle (logs, 8888), TSDProxy
+  port 80), Beszel (monitoring, 8090), Dozzle (logs, 8080), TSDProxy
   (`almeidapaulopt/tsdproxy:2`, remote access over Tailscale, no published
   port).
 - Every app's Compose file carries the label `tsdproxy.enable: "true"` from
@@ -92,7 +94,7 @@ In scope: the one path above, plus slim reference pages (troubleshooting
 keyed to this path's exact steps, a trimmed glossary, next steps, further
 reading).
 
-Phase 2: additions that pick up where the nine tasks end are welcome. That
+Phase 2: additions that pick up where the ten tasks end are welcome. That
 means a few more pieces for the reader to build, such as additional apps,
 and links for the Further Reading page. Phase 2 material sits after the
 path, assumes the reader has finished it, and follows the same writing

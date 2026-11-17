@@ -1,0 +1,19 @@
+{
+  // markdownlint's stock defaults are wrong for this content, and a config file
+  // here replaces whatever the linting tool would otherwise supply, so every
+  // deviation is stated explicitly.
+
+  // The guides are written one paragraph per line; wrapping prose to a column
+  // limit would make content diffs worse for no reader benefit.
+  "MD013": false,
+
+  // Section headings repeat across pages ("What you need", "What you'll build")
+  // and are unique only within their own section.
+  "MD024": { "siblings_only": true },
+
+  // Inline HTML is deliberate: `.stack-diagram`
+  // (src/content/docs/start-here/what-youre-building.md) and the `.ui-arrow`
+  // menu-path separators in the guides are raw elements styled by
+  // src/styles/custom.css, which Markdown cannot express.
+  "MD033": false
+}

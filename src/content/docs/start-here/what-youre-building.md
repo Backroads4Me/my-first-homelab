@@ -7,11 +7,11 @@ sidebar:
 
 You are turning one old PC into a home server.
 
-<div class="stack-diagram not-content" role="img" aria-label="Your old PC runs Proxmox. Inside Proxmox is a Debian container. Inside the container is Docker, which runs the apps Dockhand, Heimdall, Beszel, Dozzle, and TSDProxy.">
+<div class="stack-diagram not-content" role="img" aria-label="Your old PC runs Proxmox. Inside Proxmox is a Debian LXC. Inside the LXC is Docker, which runs the apps Dockhand, Heimdall, Beszel, Dozzle, and TSDProxy.">
 <div class="stack-layer">
 <span class="stack-label">Your old PC, running Proxmox</span>
 <div class="stack-layer">
-<span class="stack-label">Debian container</span>
+<span class="stack-label">Debian LXC</span>
 <div class="stack-layer">
 <span class="stack-label">Docker</span>
 <div class="stack-apps"><span>Dockhand</span><span>Heimdall</span><span>Beszel</span><span>Dozzle</span><span>TSDProxy</span></div>
@@ -22,52 +22,34 @@ You are turning one old PC into a home server.
 
 Each layer has one job:
 
-- **Proxmox** runs on the PC and manages everything inside it. It gives you snapshots and clones.
-- **A Debian Linux container (LXC)** is a small server inside Proxmox. It holds Docker.
+- **Proxmox** is a server management and virtualization platform built on Debian Linux. It allows you to run multiple virtual machines and LXCs on a single computer.
+- **An LXC** is a virtual computer inside Proxmox.
 - **Docker** runs the apps.
 - **Dockhand** manages the Docker apps, **Heimdall** links to them, **Beszel** shows system health, and **Dozzle** shows their logs.
-- **Tailscale and TSDProxy** let you reach those apps from your phone or laptop anywhere, without opening ports on your router.
+- **TSDProxy** lets you securely access the apps via a Tailscale VPN.
 
 This guide makes the choices so you can get something working. You will
 outgrow parts of it later; that is expected.
 
-Proxmox recommends running application containers such as Docker inside a virtual machine. This guide deliberately uses an unprivileged LXC with nesting enabled because snapshots and clones make mistakes cheap to undo, and its tiny overhead suits modest hardware.
-
 ## The path
 
-Nine short tasks take you from a blank machine to a working lab. Each one
-ends with something working:
+Ten short tasks take you from a blank machine to a working lab:
 
-1. Install Proxmox
-2. Set Up VS Code
-3. Create Your Container
-4. Install Docker
-5. Install Dockhand
-6. Build Your Dashboard
-7. Break It on Purpose
+1. Set Up Your Computer
+2. Install Proxmox
+3. Create Your LXC
+4. Connect to Your LXC
+5. Install Docker
+6. Install Dockhand
+7. Build Your Dashboard
 8. Add Monitoring
 9. Connect Remotely
-
-<details>
-<summary>A quick safety note before you start</summary>
-
-This guide asks you to copy commands and configuration files from a website
-and run them on your server. Most homelab guides work this way, and as a
-habit it is risky: a command you do not understand can do anything, and here
-it runs with full control of the machine.
-
-The commands and Compose files in this guide are based on each project's
-official documentation. You do not have to take that on trust. Before you run
-something you do not understand, paste it into an AI chat such as
-[Claude](https://claude.ai) or [ChatGPT](https://chatgpt.com) and ask what it
-does and whether it is safe. Do the same with every other guide you follow.
-
-</details>
+10. Perform a Rollback
 
 ## What you need
 
-- An old desktop or laptop with a 64-bit processor and a wired network connection. On a laptop, leave the lid open so the server stays awake.
-- 8 GB of RAM or more for a comfortable start; 4 GB is enough for everything in this guide
+- An old desktop or laptop with a 64-bit processor and a wired network connection.
+- 8 GB of RAM or more
 - A 64 GB drive or larger that can be erased
 - A USB stick of 2 GB or larger that can be erased
 - Your everyday Windows, macOS, or Linux computer

@@ -13,7 +13,7 @@ and then deliberately breaks one. Rolling it back is the important bit: you
 finish with a working server and proof that a mistake does not have to mean
 starting over.
 
-**[Start the guide →](https://myfirsthomelab.com/start-here/what-youre-building/)**
+**[Start the guide ➜](https://myfirsthomelab.com/start-here/what-youre-building/)**
 
 ## Feedback
 
