@@ -29,8 +29,7 @@ pnpm-debug.log*
 # crash dumps
 *.stackdump
 
-# local agent/planning files (not part of the public site)
-AGENTS.md
-CLAUDE.md
-ROADMAP.md
+# local agent/planning files
 TODO.md
+.paseo/
+.claude/
