@@ -2,17 +2,17 @@
 title: Add Monitoring
 description: Add Beszel and Dozzle through Dockhand and save a known-good snapshot.
 sidebar:
-  label: 8. Add Monitoring
-  order: 9
+  label: 9. Add Monitoring
+  order: 10
 ---
 
-Beszel shows the Debian container's health: processor, memory, disk, and
+Beszel shows your LXC's health: processor, memory, disk, and
 network use. Dozzle gives you a live, searchable view of Docker logs.
 
 ## Add Beszel
 
 In Dockhand, open **Stacks**, choose **Create**, and name the stack `beszel`.
-Replace `CONTAINER-IP` with the Debian container's address, paste the file into
+Replace `LXC-IP` with your LXC's address, paste the file into
 the editor, and choose **Create & Start**:
 
 ```yaml
@@ -22,12 +22,12 @@ services:
     container_name: beszel
     restart: unless-stopped
     environment:
-      APP_URL: http://CONTAINER-IP:8090
+      APP_URL: http://LXC-IP:8090
     ports:
       - "8090:8090"
     volumes:
-      - ./beszel_data:/beszel_data
-      - ./beszel_socket:/beszel_socket
+      - /opt/volumes/beszel/data:/beszel_data
+      - /opt/volumes/beszel/socket:/beszel_socket
     labels:
       tsdproxy.enable: "true"
   beszel-agent:
@@ -36,8 +36,8 @@ services:
     restart: unless-stopped
     network_mode: host
     volumes:
-      - ./beszel_agent_data:/var/lib/beszel-agent
-      - ./beszel_socket:/beszel_socket
+      - /opt/volumes/beszel/agent_data:/var/lib/beszel-agent
+      - /opt/volumes/beszel/socket:/beszel_socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       LISTEN: /beszel_socket/beszel.sock
@@ -46,7 +46,7 @@ services:
       KEY: "REPLACE_AFTER_ADDING_SYSTEM"
 ```
 
-Open `http://CONTAINER-IP:8090` and create your admin account. Choose **Add
+Open `http://LXC-IP:8090` and create your admin account. Choose **Add
 System**. Enter a **Name** such as `homelab` and enter
 `/beszel_socket/beszel.sock` for **Host / IP**. Copy the generated token and
 public key into the matching values in Dockhand's stack editor, then choose
@@ -69,14 +69,14 @@ services:
       - "8888:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./data:/data
+      - /opt/volumes/dozzle/data:/data
     labels:
       tsdproxy.enable: "true"
 ```
 
-Open `http://CONTAINER-IP:8888`. Add Beszel and Dozzle to Heimdall with their URLs.
+Open `http://LXC-IP:8888`. Add Beszel and Dozzle to Heimdall with their URLs.
 
-In Proxmox, select the Debian container, open **Snapshots**, choose **Take
+In Proxmox, select your LXC, open **Snapshots**, choose **Take
 Snapshot**, enter `core-complete` in the **Name** field, and choose **Take
 Snapshot**.
 

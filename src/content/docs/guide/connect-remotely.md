@@ -2,8 +2,8 @@
 title: Connect Remotely
 description: Reach your apps from anywhere with Tailscale and TSDProxy, without opening any ports.
 sidebar:
-  label: 9. Connect Remotely
-  order: 10
+  label: 10. Connect Remotely
+  order: 11
 ---
 
 Your apps only work at home so far. This task lets you open them from your
@@ -65,27 +65,28 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/data
-      - /opt/tsdproxy/config:/config
+      - /opt/volumes/tsdproxy/data:/data
+      - /opt/volumes/tsdproxy/config:/config
     extra_hosts:
       - "host.docker.internal:host-gateway"
 ```
 
 TSDProxy reads the labels through the Docker socket and reaches each app
-through the port it already publishes. The `./data` folder keeps each app's
-Tailscale identity, so the addresses survive restarts. On its first start,
-TSDProxy writes its settings file into `/opt/tsdproxy/config`.
+through the port it already publishes. The
+`/opt/volumes/tsdproxy/data` folder keeps each app's Tailscale identity, so the
+addresses survive restarts. On its first start, TSDProxy writes its settings
+file into `/opt/volumes/tsdproxy/config`.
 
 ## Add your auth key
 
-In the VS Code terminal connected to Debian, open the settings file:
+In the VS Code terminal connected to your LXC, open the settings file:
 
 ```bash
-code /opt/tsdproxy/config/tsdproxy.yaml
+nano /opt/volumes/tsdproxy/config/tsdproxy.yaml
 ```
 
 Find the line that begins with `authKey:`, paste your key between its quotes,
-and save. In Dockhand, open the `tsdproxy` stack and choose **Restart** so
+save with `Ctrl+O` and `Enter`, and close with `Ctrl+X`. In Dockhand, open the `tsdproxy` stack and choose **Restart** so
 TSDProxy reads the key.
 
 ## Open your apps from anywhere
@@ -118,9 +119,9 @@ address. These addresses work at home too, on any device with Tailscale
 connected. The Proxmox tile keeps its home address; Proxmox itself stays
 reachable only at home.
 
-In Proxmox, select the Debian container, open **Snapshots**, choose **Take
+In Proxmox, select your LXC, open **Snapshots**, choose **Take
 Snapshot**, enter `remote-access` in the **Name** field, and choose **Take
 Snapshot**.
 
-You now have Proxmox, a Debian container, Docker, a dashboard, monitoring,
+You now have Proxmox, an LXC, Docker, a dashboard, monitoring,
 live logs, and remote access. The path is complete.

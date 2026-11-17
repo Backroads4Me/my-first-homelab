@@ -14,11 +14,10 @@ make one careful experiment through Dockhand. When you want ideas or deeper
 detail, [Further Reading](/reference/further-reading/) lists the official docs
 and a few communities. Keep the habit: snapshot before every experiment.
 
-## A shortcut to save for later
+## One final note
 
-You will soon come across the
-[Proxmox VE Helper-Scripts](https://community-scripts.org/), which install
-many apps on Proxmox with one command each. I suggest waiting. Each script
-runs with full control of your Proxmox server, so use them once you can read
-one and judge what it does. They also skip the steps where you learn how the
-pieces fit together.
+You will likely come across helper scripts which install
+many apps on Proxmox with one command each. I suggest waiting before using any
+of them. Each script runs with full control of your Proxmox server, so use them
+once you can read one and judge what it does. They also skip the steps where
+you learn how the pieces fit together.

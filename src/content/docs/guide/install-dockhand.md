@@ -2,22 +2,23 @@
 title: Install Dockhand
 description: Install Dockhand and open its Docker management interface.
 sidebar:
-  label: 5. Install Dockhand
-  order: 6
+  label: 6. Install Dockhand
+  order: 7
 ---
 
 Dockhand gives you a web interface for deploying and managing Docker Compose stacks.
 
-In the VS Code terminal connected to Debian, create its directory and open a Compose file:
+In the VS Code terminal connected to your LXC, create its directory, install the nano editor, and open a new Compose file:
 
 ```bash
 mkdir -p /opt/dockhand
 cd /opt/dockhand
-code compose.yaml
+apt install -y nano
+nano compose.yaml
 ```
 
-Paste the configuration into the editor tab VS Code opens and save it
-(`Ctrl+S`, or `Cmd+S` on macOS):
+In the blank nano window, paste the configuration with a right-click (or
+`Ctrl+Shift+V`), save with `Ctrl+O` and `Enter`, and close with `Ctrl+X`:
 
 ```yaml
 services:
@@ -25,17 +26,18 @@ services:
     image: fnsys/dockhand:latest
     container_name: dockhand
     restart: unless-stopped
-    user: "0:0"
     ports:
       - "3000:3000"
-    environment:
-      DATA_DIR: /opt/dockhand
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/dockhand:/opt/dockhand
+      - /opt/volumes/dockhand/data:/app/data
     labels:
       tsdproxy.enable: "true"
 ```
+
+The data each app writes lives on the LXC under `/opt/volumes/<app-name>`,
+separate from its Compose file, so it survives deleting the stack. Dockhand's
+own data is `/opt/volumes/dockhand/data`.
 
 Every app's Compose file in this guide has this `labels` entry. It does
 nothing yet; [Connect Remotely](/guide/connect-remotely/) uses it to reach your
@@ -47,11 +49,9 @@ Start it:
 docker compose up -d
 ```
 
-Open `http://CONTAINER-IP:3000`. On first launch, Dockhand shows a one-time
+Open `http://LXC-IP:3000`. On first launch, Dockhand shows a one-time
 **Unsecured exposure** warning; choose **Got it** to dismiss it. Then go to
-**Settings → Authentication**, create your admin user, and enable
+**Settings <span class="ui-arrow" role="img" aria-label="then"></span> Authentication**, create your admin user, and enable
 authentication.
 
-Dockhand can control every Docker container through the mounted Docker socket. Keep it on your trusted home network; do not expose port 3000 to the internet.
-
-Dockhand is ready.
+Dockhand will be used to install and control every other Docker container.

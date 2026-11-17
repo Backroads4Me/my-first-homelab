@@ -18,7 +18,7 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 - Use `https`, not `http`: `https://PROXMOX-IP:8006`.
 - Confirm the IP shown on the physical server's console.
 - Make sure the server and your everyday computer are on the same home network.
-- Try `ping PROXMOX-IP` in a terminal on your everyday computer (PowerShell on Windows, Terminal on macOS or Linux; or in VS Code when not connected to a remote). If it fails, check the Ethernet cable and the gateway entered during installation.
+- Try `ping PROXMOX-IP` as [Install Proxmox](/guide/install-proxmox/) describes it. If it fails, check the Ethernet cable and the gateway entered during installation.
 
 The browser certificate warning is expected for a new Proxmox server. Accept it only when the address is your server's address.
 
@@ -28,33 +28,33 @@ The dialog saying "You do not have a valid subscription for this server" appears
 
 ## SSH says connection refused
 
-- Confirm the target IP. The Proxmox host and Debian container have different addresses.
+- Confirm the target IP. The Proxmox host and your LXC have different addresses.
 - Confirm the target is running in Proxmox.
-- Open the container's **Console** in Proxmox and run `ip address` to check its current address.
-- Retry `ssh root@PROXMOX-IP` or `ssh root@CONTAINER-IP`, whichever system you are connecting to.
+- Open the LXC's **Console** in Proxmox and run `ip address` to check its current address.
+- Retry `ssh root@LXC-IP` from the VS Code terminal on your everyday computer.
 
-If SSH rejects the key, use the Proxmox console to compare `/root/.ssh/authorized_keys` with the output of `cat $HOME/.ssh/id_ed25519.pub` on your everyday computer.
+If SSH rejects the key, open the LXC's **Console** in Proxmox and compare `/root/.ssh/authorized_keys` with the output of `cat $HOME/.ssh/id_ed25519.pub` on your everyday computer.
 
 ## SSH says "REMOTE HOST IDENTIFICATION HAS CHANGED"
 
-This appears after you recreate a container, or when an address moves to a different one. Your everyday computer still holds the old host key. In a terminal on that computer (such as a VS Code window not connected to a remote), remove the old key, replacing `CONTAINER-IP` with your container's IP address:
+This appears after you recreate the LXC, or when an address moves to a different one. Your everyday computer still holds the old host key. In the VS Code terminal on your everyday computer, remove the old key, replacing `LXC-IP` with your LXC's IP address:
 
 ```bash
-ssh-keygen -R CONTAINER-IP
+ssh-keygen -R LXC-IP
 ```
 
-Use your server's `PROXMOX-IP` instead if you are connecting to the Proxmox host. Reconnect, and SSH will ask you to accept the new host key.
+Use `PROXMOX-IP` instead if you are connecting to the Proxmox host. Reconnect, and SSH will ask you to accept the new host key.
 
-## The Debian container has no network address
+## Your LXC has no network address
 
-- Confirm the container is connected to bridge `vmbr0` in Proxmox under the container's **Network** settings.
+- Confirm the LXC is connected to bridge `vmbr0` in Proxmox under its **Network** settings.
 - Check that your router's DHCP server is running and has available addresses.
-- Under the container's **Network** settings, confirm IPv4 is set to **DHCP** and IPv6 is set to **Static** with its fields empty.
-- Shut the container down in Proxmox and start it again.
+- Under the LXC's **Network** settings, confirm IPv4 is set to **DHCP** and IPv6 is set to **Static** with its fields empty.
+- Shut the LXC down in Proxmox and start it again.
 
 ## Docker will not start in the LXC
 
-Select the Debian container in Proxmox, open **Options → Features**, and confirm **Nesting** and **keyctl** are enabled. Restart the container after changing it, then run:
+Select the LXC in Proxmox, open **Options <span class="ui-arrow" role="img" aria-label="then"></span> Features**, and confirm **Nesting** and **keyctl** are enabled. Restart the LXC after changing it, then run:
 
 ```bash
 systemctl status docker --no-pager
@@ -78,11 +78,11 @@ from the current guide page without changing its port.
 
 - Confirm the device you are using shows the Tailscale app as connected.
 - Confirm the app's Compose file has the `tsdproxy.enable: "true"` label, then redeploy its stack.
-- Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in `/opt/tsdproxy/config/tsdproxy.yaml`, and restart the `tsdproxy` stack.
+- Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in `/opt/volumes/tsdproxy/config/tsdproxy.yaml`, and restart the `tsdproxy` stack.
 - The first visit to each address can take a minute while it gets its certificate. If it never loads, confirm **Enable HTTPS** is on in the Tailscale admin console's DNS page.
 
 ## I broke it
 
-Stop changing things. In Proxmox, select the Debian container, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded. Rollback leaves the container stopped, so start it again in Proxmox before reconnecting.
+Stop changing things. In Proxmox, select your LXC, open **Snapshots**, select the last known-good snapshot, and choose **Rollback**. Changes made after that snapshot will be discarded. Rollback leaves the LXC stopped, so start it again in Proxmox before reconnecting.
 
 If there is no snapshot, inspect the affected stack's logs in Dockhand or Dozzle before deleting anything.
