@@ -48,6 +48,22 @@ ends with something working:
 8. Add Monitoring
 9. Connect Remotely
 
+<details>
+<summary>A quick safety note before you start</summary>
+
+This guide asks you to copy commands and configuration files from a website
+and run them on your server. Most homelab guides work this way, and as a
+habit it is risky: a command you do not understand can do anything, and here
+it runs with full control of the machine.
+
+The commands and Compose files in this guide are based on each project's
+official documentation. You do not have to take that on trust. Before you run
+something you do not understand, paste it into an AI chat such as
+[Claude](https://claude.ai) or [ChatGPT](https://chatgpt.com) and ask what it
+does and whether it is safe. Do the same with every other guide you follow.
+
+</details>
+
 ## What you need
 
 - An old desktop or laptop with a 64-bit processor and a wired network connection. On a laptop, leave the lid open so the server stays awake.

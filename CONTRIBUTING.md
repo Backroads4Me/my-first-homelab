@@ -92,7 +92,13 @@ In scope: the one path above, plus slim reference pages (troubleshooting
 keyed to this path's exact steps, a trimmed glossary, next steps, further
 reading).
 
-Out of scope: future "advanced" material, VMs, Proxmox Backup Server,
-public exposure (port forwarding, Tailscale Funnel, Cloudflare tunnels),
-reverse proxies and certificates for home addresses, VLANs, clustering,
-additional apps.
+Phase 2: additions that pick up where the nine tasks end are welcome. That
+means a few more pieces for the reader to build, such as additional apps,
+and links for the Further Reading page. Phase 2 material sits after the
+path, assumes the reader has finished it, and follows the same writing
+rules. It never adds a second way to do a step in the path. Open an issue to
+propose a Phase 2 piece before writing it.
+
+Out of scope: VMs, Proxmox Backup Server, public exposure (port forwarding,
+Tailscale Funnel, Cloudflare tunnels), reverse proxies and certificates for
+home addresses, VLANs, clustering.

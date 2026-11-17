@@ -36,6 +36,12 @@ gets a beginner to a working result with the fewest decisions.
 - **Tailscale and TSDProxy for remote access.** A reverse proxy with your own
   domain is more flexible. Tailscale needs no open router ports, no domain,
   and no certificates to manage.
+- **Typed steps, not helper scripts.** The
+  [Proxmox VE Helper-Scripts](https://community-scripts.org/) could build most
+  of this in a few commands. The guide has the reader do each step, because
+  that is where the learning happens, and because a beginner cannot yet judge
+  a script that runs as root on the Proxmox server.
+  [Next Steps](/reference/next-steps/) points to the scripts for later.
 - **Few apps.** The guide installs a dashboard, monitoring, and a log viewer,
   and stops there. Choosing what to run next is the reader's job.
 
