@@ -38,8 +38,10 @@ and make it easy to fix a mistake.
 ### Opinionated by design (say it, own it)
 
 The path is deliberately opinionated for simplicity and speed. Readers are
-fully expected to outgrow it. That is the guide working as intended. This
-framing appears once, on the Start Here page.
+fully expected to outgrow it. That is the guide working as intended. The
+Start Here page says this in one sentence. The Why This Path page holds the
+full explanation and the trade-offs behind each choice; when a choice in the
+guide changes, update that page too.
 
 ## Writing Rules
 

@@ -22,10 +22,9 @@ Open **Terminal → New Terminal** inside VS Code and run:
 ssh-keygen -t ed25519
 ```
 
-Press Enter to accept the default file and enter a passphrase you can
-remember. Nothing appears while you type the passphrase; that is normal.
-If the default file already exists, answer `n` when asked whether to overwrite
-it. Your existing key will work.
+Press Enter three times: once to accept the default file, then twice to
+leave the passphrase empty. If the default file already exists, answer `n`
+when asked whether to overwrite it. Your existing key will work.
 
 Copy the key to Proxmox with these two commands, replacing `PROXMOX-IP` with
 the address you reserved:

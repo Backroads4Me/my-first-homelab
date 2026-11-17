@@ -3,7 +3,7 @@ title: About My First Homelab
 description: The story and philosophy behind this beginner-friendly homelab guide.
 sidebar:
   label: About
-  order: 5
+  order: 6
 ---
 
 This guide begins where I did: with one spare computer and a reason to see what it could do.
