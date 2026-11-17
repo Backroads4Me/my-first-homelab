@@ -39,7 +39,7 @@ and make it easy to fix a mistake.
 
 The path is deliberately opinionated for simplicity and speed. Readers are
 fully expected to outgrow it. That is the guide working as intended. This
-framing appears on the Start Here page and in the Next Steps send-off.
+framing appears once, on the Start Here page.
 
 ## Writing Rules
 

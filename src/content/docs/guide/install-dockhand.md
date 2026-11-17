@@ -2,6 +2,7 @@
 title: Install Dockhand
 description: Install Dockhand and open its Docker management interface.
 sidebar:
+  label: 5. Install Dockhand
   order: 6
 ---
 
@@ -54,5 +55,3 @@ authentication.
 Dockhand can control every Docker container through the mounted Docker socket. Keep it on your trusted home network; do not expose port 3000 to the internet.
 
 Dockhand is ready.
-
-**[Next: Build Your Dashboard →](/guide/your-dashboard/)**

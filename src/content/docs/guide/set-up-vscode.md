@@ -2,10 +2,11 @@
 title: Set Up VS Code
 description: Install VS Code, create an SSH key, and connect to Proxmox.
 sidebar:
+  label: 2. Set Up VS Code
   order: 3
 ---
 
-Visual Studio Code is the standard starting point for working with servers and code. In this guide it gives you one place for file editing, a terminal, and SSH connections.
+Visual Studio Code is a free editor from Microsoft. In this guide it gives you one place for file editing, a terminal, and SSH connections.
 
 ## Install VS Code and Remote - SSH
 
@@ -54,5 +55,3 @@ Then close the remote: **File → Close Remote Connection**. The next page's
 terminal runs on your everyday computer.
 
 Your workstation is ready.
-
-**[Next: Create Your Container →](/guide/create-your-container/)**

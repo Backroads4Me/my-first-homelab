@@ -11,7 +11,7 @@ Start with the symptom you can see. Change one thing, test again, and keep notes
 
 - Reflash the Proxmox ISO with balenaEtcher and let validation finish.
 - Use the PC's one-time boot menu, usually `F12`, `F2`, or `Del`, and select the USB stick.
-- In BIOS settings, enable USB boot and Intel VT-x or AMD-V virtualization.
+- In BIOS settings, enable USB boot.
 
 ## Proxmox does not open on port 8006
 
@@ -49,7 +49,8 @@ Use your server's `PROXMOX-IP` instead if you are connecting to the Proxmox host
 
 - Confirm the container is connected to bridge `vmbr0` in Proxmox under the container's **Network** settings.
 - Check that your router's DHCP server is running and has available addresses.
-- Open the container's **Console** in Proxmox, sign in as `root`, and run `systemctl restart systemd-networkd`.
+- Under the container's **Network** settings, confirm IPv4 is set to **DHCP** and IPv6 is set to **Static** with its fields empty.
+- Shut the container down in Proxmox and start it again.
 
 ## Docker will not start in the LXC
 
@@ -69,16 +70,15 @@ the port. Find the container:
 docker ps --format 'table {{.Names}}\t{{.Ports}}'
 ```
 
-Open that container in Dockhand and remove its old stack. If Dockhand itself
-will not open, run `docker ps` in the container terminal to find the
-conflicting name, then `docker rm -f NAME`. Redeploy the stack
+Remove that container's old stack in Dockhand. If Dockhand itself will not
+open, run `docker rm -f NAME` with the name from the list. Redeploy the stack
 from the current guide page without changing its port.
 
 ## An app does not open over Tailscale
 
 - Confirm the device you are using shows the Tailscale app as connected.
 - Confirm the app's Compose file has the `tsdproxy.enable: "true"` label, then redeploy its stack.
-- Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in the `tsdproxy` stack, and choose **Save & redeploy**.
+- Open the `tsdproxy` logs in Dozzle. An auth key error means the key was mistyped or has expired: generate a new one, replace it in `/opt/tsdproxy/config/tsdproxy.yaml`, and restart the `tsdproxy` stack.
 - The first visit to each address can take a minute while it gets its certificate. If it never loads, confirm **Enable HTTPS** is on in the Tailscale admin console's DNS page.
 
 ## I broke it

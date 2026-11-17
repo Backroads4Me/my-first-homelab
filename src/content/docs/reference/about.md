@@ -16,7 +16,7 @@ My First Homelab removes those choices. It gives you one deliberately
 opinionated path from an old PC to a small, working homelab. The real goal is
 to make mistakes feel cheap. Once that happens, experimenting gets fun.
 
-You will eventually outgrow this guide. That is the point. It should leave you with a working system and the confidence to break it, fix it, and choose what comes next.
+It should leave you with a working system and the confidence to break it, fix it, and choose what comes next.
 
 I am not an expert. I am still learning and experimenting. I have spent an inordinate amount of time on this hobby over the years and it even led to a little consulting work, but curiosity remains my main qualification.
 

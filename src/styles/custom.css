@@ -205,6 +205,46 @@ main > .markdown-wrapper > .sl-markdown-content {
   text-align: center;
 }
 
+/* Nested-box diagram on the Start Here page: each layer sits inside the one
+   that hosts it. */
+.stack-diagram {
+  max-width: 34rem;
+  margin: 1.5rem auto;
+}
+
+.stack-layer {
+  padding: 0.75rem 1rem 1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
+}
+
+.stack-layer .stack-layer {
+  margin-top: 0.5rem;
+}
+
+.stack-label {
+  display: block;
+  color: var(--sl-color-white);
+  font-size: var(--sl-text-sm);
+  font-weight: 600;
+}
+
+.stack-apps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.stack-apps span {
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  background: var(--card);
+  color: #ffffff;
+  font-size: var(--sl-text-sm);
+}
+
 html:not([data-theme="dark"]) {
   --background: #f7f6f3;
 }

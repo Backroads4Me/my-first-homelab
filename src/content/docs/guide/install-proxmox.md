@@ -2,6 +2,7 @@
 title: Install Proxmox
 description: Install Proxmox VE 9 and update it from the web interface.
 sidebar:
+  label: 1. Install Proxmox
   order: 2
 ---
 
@@ -36,7 +37,8 @@ The physical server's console shows its management address after it starts.
 Proxmox keeps the address it was installed with. Open your router's admin
 page and create a DHCP reservation for that address so the router never
 hands it to another device. The router's client list shows the Proxmox
-device and its MAC address if the reservation asks for one.
+device and its MAC address if the reservation asks for one. Write the address
+down; the guide calls it `PROXMOX-IP`.
 
 On your everyday computer, open `https://PROXMOX-IP:8006`, replacing
 `PROXMOX-IP` with the reserved address. Accept the browser's warning for the
@@ -54,5 +56,3 @@ Set up the no-subscription repository:
 5. Follow the prompts in the upgrade window and reboot if requested.
 
 You now have an updated Proxmox server.
-
-**[Next: Set Up VS Code →](/guide/set-up-vscode/)**

@@ -2,11 +2,12 @@
 title: Add Monitoring
 description: Add Beszel and Dozzle through Dockhand and save a known-good snapshot.
 sidebar:
+  label: 8. Add Monitoring
   order: 9
 ---
 
-Beszel shows the server's health. Dozzle gives you a live, searchable view of
-Docker logs.
+Beszel shows the Debian container's health: processor, memory, disk, and
+network use. Dozzle gives you a live, searchable view of Docker logs.
 
 ## Add Beszel
 
@@ -75,10 +76,8 @@ services:
 
 Open `http://CONTAINER-IP:8888`. Add Beszel and Dozzle to Heimdall with their URLs.
 
-You now have Proxmox, a lightweight Debian container, Docker, a dashboard,
-health monitoring, and live logs. You have also proved you can undo a mistake.
 In Proxmox, select the Debian container, open **Snapshots**, choose **Take
 Snapshot**, enter `core-complete` in the **Name** field, and choose **Take
-Snapshot**. Make **snapshot before every experiment** your homelab habit.
+Snapshot**.
 
-**[Next Steps: Where to Go from Here →](/reference/next-steps/)**
+You now have health monitoring and live logs.

@@ -2,6 +2,7 @@
 title: Break It on Purpose
 description: Delete your dashboard, restore a snapshot, and practice cloning the server.
 sidebar:
+  label: 7. Break It on Purpose
   order: 8
 ---
 
@@ -21,20 +22,20 @@ You are going to break your server on purpose. Knowing you can undo an experimen
 4. Wait for the rollback task to finish, then start the container. Proxmox always leaves a container stopped after a rollback.
 5. Reload `http://CONTAINER-IP:8080` and watch Heimdall return.
 
-The snapshot restored the container's filesystem and configuration to the moment you captured it. Future experiments can be bold because you now know how to get back.
+The snapshot restored the container's filesystem and configuration to the moment you captured it.
 
 ## Clone your working server
 
-Stop the Debian container, then choose **More → Clone**. Enter `docker-sandbox` for the hostname, choose a new CT ID, and choose **Clone**. Proxmox always makes a full clone of a normal container, so there is no clone mode to pick.
+Stop the Debian container, then choose **More → Clone**. Enter `docker-sandbox` for the hostname, keep the suggested CT ID, and choose **Clone**. Proxmox always makes a full clone of a normal container, so there is no clone mode to pick.
 
 Keep the original stopped while you test the clone. A clone copies system
 identity files along with the apps, so running both at once can cause a network
-address conflict. Start the clone, confirm that it contains the same apps, then
-stop it. Select the clone, choose **More → Remove**, type the clone's CT ID
-into the confirmation box, and choose **Remove**. Then restart the original.
+address conflict. Start the clone and find its address on its **Summary** page.
+Open `http://` followed by that address and `:8080` to confirm Heimdall is
+there, then stop the clone. Select it, choose **More → Remove**, type the
+clone's CT ID into the confirmation box, and choose **Remove**. Then start the
+original again.
 
-A clone is a safe sandbox for a larger experiment and a starting template for your next server.
+Use a clone when you want to try a larger change without touching the original.
 
 You have proved you can break something and get it back.
-
-**[Next: Add Monitoring →](/guide/add-monitoring/)**

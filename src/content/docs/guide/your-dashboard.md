@@ -2,6 +2,7 @@
 title: Build Your Dashboard
 description: Deploy Heimdall through Dockhand and save a working snapshot.
 sidebar:
+  label: 6. Build Your Dashboard
   order: 7
 ---
 
@@ -46,6 +47,4 @@ at `http://CONTAINER-IP:3000`.
 
 In Proxmox, select the Debian container, open **Snapshots**, choose **Take Snapshot**, enter `working-dashboard` in the **Name** field, and choose **Take Snapshot**.
 
-Your homelab now has a front door and a restore point.
-
-**[Next: Break It on Purpose →](/guide/break-it-on-purpose/)**
+Heimdall is running, and you have a snapshot of the working setup.

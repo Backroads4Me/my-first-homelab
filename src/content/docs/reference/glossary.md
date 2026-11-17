@@ -21,7 +21,7 @@ sidebar:
 
 **Image:** A packaged, read-only application used to create a Docker container.
 
-**Keyctl:** A Linux kernel facility that manages security keys and tokens, required by modern systemd inside an unprivileged container.
+**Keyctl:** The Proxmox LXC feature that lets an unprivileged container use the Linux kernel's key storage. Docker needs it to run inside the container.
 
 **LXC:** The Linux container technology Proxmox uses for lightweight system containers.
 
@@ -43,7 +43,7 @@ sidebar:
 
 **TSDProxy:** A Docker app that gives each labeled container its own HTTPS address on your tailnet.
 
-**Unprivileged container:** An LXC that runs as an ordinary user on the host. Root inside the container is not root on the host, so a mistake inside stays inside.
+**Unprivileged container:** An LXC that runs as an ordinary user on the host. Root inside the container is not root on the host, which limits the damage a mistake inside can do.
 
 **VM:** A virtual machine that behaves like a separate computer with its own operating system and virtual hardware.
 

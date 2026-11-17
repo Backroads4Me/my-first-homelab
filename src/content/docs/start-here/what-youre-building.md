@@ -7,12 +7,31 @@ sidebar:
 
 You are turning one old PC into a home server.
 
-Proxmox manages the server and gives you snapshots and clones. A Debian Linux container (LXC) holds Docker. Dockhand manages the Docker apps, Heimdall links to them, Beszel shows system health, and Dozzle shows container logs. Tailscale and TSDProxy let you reach those apps from your phone or laptop anywhere, without opening ports on your router.
+<div class="stack-diagram not-content" role="img" aria-label="Your old PC runs Proxmox. Inside Proxmox is a Debian container. Inside the container is Docker, which runs the apps Dockhand, Heimdall, Beszel, Dozzle, and TSDProxy.">
+<div class="stack-layer">
+<span class="stack-label">Your old PC, running Proxmox</span>
+<div class="stack-layer">
+<span class="stack-label">Debian container</span>
+<div class="stack-layer">
+<span class="stack-label">Docker</span>
+<div class="stack-apps"><span>Dockhand</span><span>Heimdall</span><span>Beszel</span><span>Dozzle</span><span>TSDProxy</span></div>
+</div>
+</div>
+</div>
+</div>
+
+Each layer has one job:
+
+- **Proxmox** runs on the PC and manages everything inside it. It gives you snapshots and clones.
+- **A Debian Linux container (LXC)** is a small server inside Proxmox. It holds Docker.
+- **Docker** runs the apps.
+- **Dockhand** manages the Docker apps, **Heimdall** links to them, **Beszel** shows system health, and **Dozzle** shows their logs.
+- **Tailscale and TSDProxy** let you reach those apps from your phone or laptop anywhere, without opening ports on your router.
 
 This guide makes the choices so you can get something working. You will
-outgrow parts of it later. Good. That means it did its job.
+outgrow parts of it later; that is expected.
 
-Proxmox recommends running application containers such as Docker inside a virtual machine. This guide deliberately uses an unprivileged LXC with nesting enabled because snapshots and clones make experimentation less scary, and its tiny overhead suits modest hardware.
+Proxmox recommends running application containers such as Docker inside a virtual machine. This guide deliberately uses an unprivileged LXC with nesting enabled because snapshots and clones make mistakes cheap to undo, and its tiny overhead suits modest hardware.
 
 ## The path
 
@@ -31,14 +50,9 @@ ends with something working:
 
 ## What you need
 
-- An old desktop or laptop with a 64-bit processor and a wired network connection
-- An old laptop works if you leave the lid open so the server stays awake
-- 16 GB of RAM for a comfortable start; do not use a machine with less than 8 GB
+- An old desktop or laptop with a 64-bit processor and a wired network connection. On a laptop, leave the lid open so the server stays awake.
+- 8 GB of RAM or more for a comfortable start; 4 GB is enough for everything in this guide
 - A 64 GB drive or larger that can be erased
 - A USB stick of 2 GB or larger that can be erased
 - Your everyday Windows, macOS, or Linux computer
-- A weekend of curiosity
-
-The best hardware is what you already have.
-
-**[Next: Install Proxmox →](/guide/install-proxmox/)**
+- A weekend to work through it at your own pace

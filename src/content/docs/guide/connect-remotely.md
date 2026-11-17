@@ -2,6 +2,7 @@
 title: Connect Remotely
 description: Reach your apps from anywhere with Tailscale and TSDProxy, without opening any ports.
 sidebar:
+  label: 9. Connect Remotely
   order: 10
 ---
 
@@ -54,8 +55,7 @@ sign-in for each one.
 ## Install TSDProxy
 
 In Dockhand, open **Stacks**, choose **Create**, and name the stack
-`tsdproxy`. Paste this file, replace `PASTE-YOUR-AUTH-KEY` with your key, and
-choose **Create & Start**:
+`tsdproxy`. Paste this file and choose **Create & Start**:
 
 ```yaml
 services:
@@ -63,18 +63,30 @@ services:
     image: almeidapaulopt/tsdproxy:2
     container_name: tsdproxy
     restart: unless-stopped
-    environment:
-      TSDPROXY_AUTHKEY: "PASTE-YOUR-AUTH-KEY"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/data
+      - /opt/tsdproxy/config:/config
     extra_hosts:
       - "host.docker.internal:host-gateway"
 ```
 
 TSDProxy reads the labels through the Docker socket and reaches each app
 through the port it already publishes. The `./data` folder keeps each app's
-Tailscale identity, so the addresses survive restarts.
+Tailscale identity, so the addresses survive restarts. On its first start,
+TSDProxy writes its settings file into `/opt/tsdproxy/config`.
+
+## Add your auth key
+
+In the VS Code terminal connected to Debian, open the settings file:
+
+```bash
+code /opt/tsdproxy/config/tsdproxy.yaml
+```
+
+Find the line that begins with `authKey:`, paste your key between its quotes,
+and save. In Dockhand, open the `tsdproxy` stack and choose **Restart** so
+TSDProxy reads the key.
 
 ## Open your apps from anywhere
 
@@ -91,16 +103,24 @@ your own address. The first visit to each app can take a minute while it gets
 its certificate.
 
 The other apps follow the same pattern: `https://dockhand.`, `https://beszel.`,
-and `https://dozzle.` with the same ending. Heimdall's tiles still point to
-your home addresses, so use these addresses when you are away. Proxmox itself
-stays reachable only at home.
+and `https://dozzle.` with the same ending.
 
 The auth key expires after 90 days. That only matters when you add a new app;
-generate a new key then and replace it in the `tsdproxy` stack with **Save &
-redeploy**.
+generate a new key then, replace the old one in `tsdproxy.yaml`, and restart
+the `tsdproxy` stack.
+
+## Update your dashboard
+
+Heimdall's tiles still point to your home addresses, which do not work away
+from home. In Heimdall, open the application list, edit the Dockhand, Beszel,
+and Dozzle tiles, and replace each **URL** with the app's `https://` Tailscale
+address. These addresses work at home too, on any device with Tailscale
+connected. The Proxmox tile keeps its home address; Proxmox itself stays
+reachable only at home.
 
 In Proxmox, select the Debian container, open **Snapshots**, choose **Take
 Snapshot**, enter `remote-access` in the **Name** field, and choose **Take
 Snapshot**.
 
-Your homelab now goes wherever your phone goes.
+You now have Proxmox, a Debian container, Docker, a dashboard, monitoring,
+live logs, and remote access. The path is complete.
