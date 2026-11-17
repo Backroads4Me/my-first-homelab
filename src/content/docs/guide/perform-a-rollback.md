@@ -1,12 +1,23 @@
 ---
 title: Perform a Rollback
-description: Delete your dashboard, restore a snapshot, and practice cloning your LXC.
+description: Roll back to a snapshot, delete your dashboard on purpose, and practice cloning your LXC.
 sidebar:
   label: 10. Perform a Rollback
   order: 11
 ---
 
 You are going to break your LXC on purpose. Knowing you can undo an experiment is what makes a homelab fun instead of scary.
+
+## Roll back to your last snapshot
+
+These steps work at any point in the guide, whenever a task goes wrong:
+
+1. In Proxmox, select your LXC and open **Snapshots**.
+2. Select your most recent snapshot and choose **Rollback**.
+3. Confirm that changes made after the snapshot will be discarded.
+4. Wait for the rollback task to finish, then start the LXC. Proxmox always leaves it stopped after a rollback.
+
+The rollback returns the LXC's filesystem and configuration to the moment you took the snapshot and discards everything after it. Start the task you were on again from the top.
 
 ## Delete the dashboard
 
@@ -16,15 +27,7 @@ You are going to break your LXC on purpose. Knowing you can undo an experiment i
 
 ## Roll it back
 
-1. In Proxmox, select your LXC and open **Snapshots**.
-2. Select your most recent snapshot and choose **Rollback**.
-3. Confirm that changes made after the snapshot will be discarded.
-4. Wait for the rollback task to finish, then start the LXC. Proxmox always leaves it stopped after a rollback.
-5. Reload `http://LXC-IP` and watch Heimdall return.
-
-_❗ Rollback returns the LXC to the state at that snapshot and discards everything after it. A snapshot newer than the one you chose cannot be used afterwards: if Proxmox refuses with a message about more recent snapshots, delete those newer snapshots and roll back again. Keeping only the newest snapshot, as this guide does, avoids the situation._
-
-The snapshot restored the LXC's filesystem and configuration to the moment you captured it.
+Follow [Roll back to your last snapshot](#roll-back-to-your-last-snapshot) with your `remote-access` snapshot, then reload `http://LXC-IP` and watch Heimdall return.
 
 ## Clean up your snapshots
 

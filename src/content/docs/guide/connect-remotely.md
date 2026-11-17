@@ -115,25 +115,34 @@ select `pve` in the tree on the left, choose **Shell**, and paste these
 commands:
 
 ```bash
-curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
-curl -fsSL https://pkgs.tailscale.com/stable/debian/trixie.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
-apt update && apt install -y tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 ```
 
 `tailscale up` prints an address. Open it in your browser and sign in to
 Tailscale to add the machine. Within a minute the
 [Machines](https://console.tailscale.com/admin/machines) page lists `pve`
-beside your apps, and Proxmox is at `https://pve.tail1234.ts.net:8006`, with
-your own tailnet name in place of `tail1234`.
+beside your apps.
+
+Then give Proxmox a real HTTPS certificate, the same kind your apps have. In
+the same Shell, run:
+
+```bash
+tailscale serve --bg https+insecure://localhost:8006
+```
+
+If it prints an address asking you to enable Serve on your tailnet, open it,
+enable Serve, and run the command again. Tailscale now answers on
+`https://pve.tail1234.ts.net`, with your own tailnet name in place of
+`tail1234`, passes each request to Proxmox, and renews the certificate on its
+own. The address has no `:8006`, and the browser shows no certificate warning.
 
 ## Update your dashboard
 
 Heimdall's tiles still point to your home addresses, which do not work away
 from home. In Heimdall, open the **Application list**, edit the Proxmox,
 Dockhand, Beszel, and Dozzle tiles, and replace each **URL** with the app's
-`https://` Tailscale address. The Proxmox tile keeps its `:8006` port. These
-addresses work at home too, on any device with Tailscale connected.
+`https://` Tailscale address. These addresses work at home too, on any device with Tailscale connected.
 
 In Proxmox, select your LXC, open **Snapshots**, choose **Take
 Snapshot**, enter `remote-access` in the **Name** field, and choose **Take

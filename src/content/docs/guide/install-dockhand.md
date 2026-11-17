@@ -17,8 +17,9 @@ apt install -y nano
 nano compose.yaml
 ```
 
-In the blank nano window, paste the configuration with a right-click (or
-`Ctrl+Shift+V`), save with `Ctrl+O` and `Enter`, and close with `Ctrl+X`:
+In the blank nano window, paste the configuration (`Ctrl+V` on Windows, `Cmd+V`
+on macOS, `Ctrl+Shift+V` on Linux), save with `Ctrl+O` and `Enter`, and close
+with `Ctrl+X`:
 
 ```yaml
 services:

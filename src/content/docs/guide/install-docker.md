@@ -60,6 +60,6 @@ In Proxmox, select your LXC, open **Snapshots**, choose **Take Snapshot**, enter
 
 This snapshot preserves the clean Docker installation. If a later experiment goes badly, you can return to this exact state instead of rebuilding the LXC. A snapshot is a safety net for one change rather than a backup: it lives on the same disk as the LXC, and an old one stops that disk reusing space, so delete it once you are sure you will not need it.
 
-_📌 You will take a snapshot after each major task and delete the one before it, so a single known-good state is always behind you. If a step ever goes wrong, skip ahead to [Perform a Rollback](/guide/perform-a-rollback/), then revert to your most recent snapshot, and start the step again._
+_📌 You will take a snapshot after each major task and delete the one before it, so a single known-good state is always behind you. If a step ever goes wrong, follow [Roll back to your last snapshot](/guide/perform-a-rollback/#roll-back-to-your-last-snapshot) and start the step again._
 
 Docker works, and you have a snapshot to return to.

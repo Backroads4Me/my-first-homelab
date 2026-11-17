@@ -18,18 +18,15 @@ This task turns the old PC into a Proxmox server you can manage from a browser.
 
 ## Install Proxmox
 
-Before you boot, connect the server (your old computer) to your router with an Ethernet cable. The installer has no
-Wi-Fi option, and the update steps below need internet.
+Before you boot, connect the server (your old computer) to your router with an Ethernet cable. The installer has no Wi-Fi option, and the update steps below need internet.
 
-Boot the server from the USB stick and choose **Install Proxmox VE (Graphical)**.
-Follow the installer:
+Boot the server from the USB stick and choose **Install Proxmox VE (Graphical)**. Follow the installer:
 
 1. Accept the license and select the drive to erase.
 2. Set your country, time zone, and keyboard layout.
 3. Set a strong root password and enter your email address.
 4. On **Management Network Configuration**, select the wired network interface. The installer fills in the network values supplied by your router. Leave those values in place and enter:
-   - **Hostname:** `pve.home.arpa`. Proxmox uses the part before the first dot as the server's own
-     name, so it appears in the web interface as **pve**.
+   - **Hostname:** `pve.home.arpa`. Proxmox uses the part before the first dot as the server's own name, so it appears in the web interface as **pve**.
 5. Review the summary, install, remove the USB stick, and reboot.
 
 :::caution[USB does not boot]
@@ -51,25 +48,17 @@ Replies mean the address is right. Windows stops after four on its own, and macO
 Proxmox keeps that address until you tell the router otherwise, so open your router's admin page and create a DHCP reservation for it, and the router will not hand it to another device. The router's client list shows the Proxmox device and its MAC address if the reservation asks for one.
 
 ## Log in and update
-On your everyday computer, open `https://PROXMOX-IP:8006`, replacing `PROXMOX-IP` with the
-reserved address.
 
-The browser interrupts with **Your connection is not private** in Chrome, or **Warning: Potential
-Security Risk Ahead** in Firefox. Proxmox answers HTTPS with a certificate it signed itself, which
-no certificate authority your browser trusts has vouched for, so this warning appears on every
-fresh install and is expected on your own network. Choose **Advanced**, then **Proceed to …
-(unsafe)**; that button repeats the address you typed. Firefox calls it **Accept the Risk and
-Continue**.
+On your everyday computer, open `https://PROXMOX-IP:8006`, replacing `PROXMOX-IP` with the reserved address.
 
-Sign in as `root` with realm **Linux PAM standard authentication**. A "No valid subscription"
-message appears; this is normal, and **OK** dismisses it.
+The browser interrupts with **Your connection is not private** in Chrome, or **Warning: Potential Security Risk Ahead** in Firefox. Proxmox answers HTTPS with a certificate it signed itself, which no certificate authority your browser trusts has vouched for, so this warning appears on every fresh install and is expected on your own network. Choose **Advanced**, then **Proceed to … (unsafe)**; that button repeats the address you typed. Firefox calls it **Accept the Risk and Continue**.
+
+Sign in as `root` with realm **Linux PAM standard authentication**. A "No valid subscription" message appears; this is normal, and **OK** dismisses it.
 
 Set up the no-subscription repository:
 
-1. Select **pve** in the tree on the left. That is your server; Proxmox calls each machine it
-   manages a node. Then open **Updates <span class="ui-arrow" role="img" aria-label="then"></span> Repositories**.
-2. Select the enterprise repository and choose **Disable**. Do the same for
-   the Ceph enterprise repository if it is listed.
+1. Select **pve** in the tree on the left. That is your server; Proxmox calls each machine it manages a node. Then open **Updates <span class="ui-arrow" role="img" aria-label="then"></span> Repositories**.
+2. Select the enterprise repository and choose **Disable**. Do the same for the Ceph enterprise repository if it is listed.
 3. Choose **Add**, select **No-Subscription**, and confirm.
 4. Open **Updates**, choose **Refresh**, then **Upgrade**.
 5. Follow the prompts in the upgrade window and reboot if requested.
